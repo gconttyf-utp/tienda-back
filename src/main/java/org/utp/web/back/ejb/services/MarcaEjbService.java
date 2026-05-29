@@ -2,11 +2,10 @@ package org.utp.web.back.ejb.services;
 
 import java.util.List;
 
+import jakarta.ejb.Local;
 import org.utp.web.back.ejb.entities.Marca;
 
-import jakarta.ejb.Remote;
-
-@Remote
+@Local
 public interface MarcaEjbService {
 
     List<Marca> listarTodos();

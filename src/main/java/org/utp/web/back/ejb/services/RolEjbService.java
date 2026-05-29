@@ -1,11 +1,11 @@
 package org.utp.web.back.ejb.services;
 
-import jakarta.ejb.Remote;
+import jakarta.ejb.Local;
 import org.utp.web.back.ejb.entities.Rol;
 
 import java.util.List;
 
-@Remote
+@Local
 public interface RolEjbService {
 
     List<Rol> listado(List<Integer> estados);

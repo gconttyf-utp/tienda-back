@@ -1,11 +1,11 @@
 package org.utp.web.back.ejb.services;
 
-import jakarta.ejb.Remote;
+import jakarta.ejb.Local;
 import org.utp.web.back.ejb.entities.Usuario;
 
 import java.util.List;
 
-@Remote
+@Local
 public interface UsuarioEjbService {
 
     List<Usuario> listado(List<Integer> estados);

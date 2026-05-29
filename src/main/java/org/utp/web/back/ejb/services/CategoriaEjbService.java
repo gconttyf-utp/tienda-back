@@ -2,11 +2,10 @@ package org.utp.web.back.ejb.services;
 
 import java.util.List;
 
+import jakarta.ejb.Local;
 import org.utp.web.back.ejb.entities.Categoria;
 
-import jakarta.ejb.Remote;
-
-@Remote
+@Local
 public interface CategoriaEjbService {
 
     List<Categoria> listarPorIdGrupo(Integer idGrupo);
