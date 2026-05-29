@@ -3,6 +3,7 @@ package org.utp.web.back.ejb.services;
 import java.util.List;
 
 import jakarta.ejb.Local;
+import org.utp.web.back.apirest.models.dto.MarcaDTO;
 import org.utp.web.back.ejb.entities.Marca;
 
 @Local
@@ -12,7 +13,7 @@ public interface MarcaEjbService {
 
     Marca buscarMarca(Integer id);
 
-    List<Marca> listado(List<Integer> estados);
+    List<MarcaDTO> listado(List<Integer> estados);
 
     Marca encontrarId(Integer id);
 

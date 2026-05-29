@@ -10,19 +10,19 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
-import org.utp.web.back.apirest.services.MarcaService;
+import org.utp.web.back.ejb.services.MarcaEjbService;
 
 @Path("/marca")
 public class MarcaController {
 
     @Inject
-    private MarcaService service;
+    private MarcaEjbService marcaEjbService;
 
     @GET
     @Path("/listado")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar(@QueryParam("estado") List<Integer> estados){
         System.out.println("marca.listar()");
-        return Response.ok().entity(service.listarMarca(estados)).build();
+        return Response.ok().entity(marcaEjbService.listado(estados)).build();
     }
 }

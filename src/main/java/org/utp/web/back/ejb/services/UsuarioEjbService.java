@@ -1,6 +1,7 @@
 package org.utp.web.back.ejb.services;
 
 import jakarta.ejb.Local;
+import org.utp.web.back.apirest.models.dto.UsuarioDTO;
 import org.utp.web.back.ejb.entities.Usuario;
 
 import java.util.List;
@@ -8,9 +9,9 @@ import java.util.List;
 @Local
 public interface UsuarioEjbService {
 
-    List<Usuario> listado(List<Integer> estados);
+    List<UsuarioDTO> listado(List<Integer> estados);
 
-    Usuario encontrarId(Integer id);
+    UsuarioDTO encontrarId(Integer id);
 
     Usuario save(Integer id, Usuario oDTO);
 

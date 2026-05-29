@@ -4,6 +4,8 @@ import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
+import org.utp.web.back.apirest.models.dto.UsuarioDTO;
+import org.utp.web.back.apirest.models.mappers.UsuarioMapper;
 import org.utp.web.back.ejb.entities.Usuario;
 import org.utp.web.back.ejb.repositories.UsuarioRepository;
 
@@ -15,16 +17,19 @@ public class UsuarioEjbServiceImpl implements UsuarioEjbService {
     @Inject
     private UsuarioRepository repository;
 
+    @Inject
+    private UsuarioMapper mapper;
+
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Usuario> listado(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<UsuarioDTO> listado(List<Integer> estados) {
+        return mapper.toDTOList( repository.findByEstadoIn(estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Usuario encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public UsuarioDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override

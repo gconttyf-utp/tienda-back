@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import org.utp.web.back.apirest.models.dto.ProductoDTO;
+import org.utp.web.back.apirest.models.mappers.ProductoMapper;
 import org.utp.web.back.ejb.entities.Producto;
 import org.utp.web.back.ejb.repositories.ProductoRepository;
 
@@ -15,6 +17,9 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
 
     @Inject
     private ProductoRepository repository;
+
+    @Inject
+    private ProductoMapper mapper;
 
     @Override
     public List<Producto> listarPorIdCategoria(Integer idCategoria) {
@@ -33,26 +38,26 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Producto> listarProductosPorCategoria(Integer categoria, List<Integer> estados) {
-        return repository.findByCategoriaIdAndEstadoIn(categoria, estados);
+    public List<ProductoDTO> listarProductosPorCategoria(Integer categoria, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByCategoriaIdAndEstadoIn(categoria, estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Producto> listarProductosPorMarca(Integer marca, List<Integer> estados) {
-        return repository.findByMarcaIdAndEstadoIn(marca, estados);
+    public List<ProductoDTO> listarProductosPorMarca(Integer marca, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByMarcaIdAndEstadoIn(marca, estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Producto> listarProductosPorCategoriaAndMarca(Integer categoria, Integer marca, List<Integer> estados) {
-        return repository.findByCategoriaIdAndMarcaIdAndEstadoIn(categoria, marca, estados);
+    public List<ProductoDTO> listarProductosPorCategoriaAndMarca(Integer categoria, Integer marca, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByCategoriaIdAndMarcaIdAndEstadoIn(categoria, marca, estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Producto encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public ProductoDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override

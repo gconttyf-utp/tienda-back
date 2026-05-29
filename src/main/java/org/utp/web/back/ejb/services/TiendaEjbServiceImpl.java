@@ -4,6 +4,8 @@ import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
+import org.utp.web.back.apirest.models.dto.TiendaDTO;
+import org.utp.web.back.apirest.models.mappers.TiendaMapper;
 import org.utp.web.back.ejb.entities.Tienda;
 import org.utp.web.back.ejb.repositories.TiendaRepository;
 
@@ -15,16 +17,19 @@ public class TiendaEjbServiceImpl implements TiendaEjbService {
     @Inject
     private TiendaRepository repository;
 
+    @Inject
+    private TiendaMapper mapper;
+
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Tienda> listado(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<TiendaDTO> listado(List<Integer> estados) {
+        return mapper.toDTOList( repository.findByEstadoIn(estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Tienda> listadoUbigeo(String ubigeo, List<Integer> estados) {
-        return repository.findByUbigeoCodUbigeoAndEstadoIn(ubigeo, estados);
+    public List<TiendaDTO> listadoUbigeo(String ubigeo, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByUbigeoCodUbigeoAndEstadoIn(ubigeo, estados) );
     }
 
     @Override

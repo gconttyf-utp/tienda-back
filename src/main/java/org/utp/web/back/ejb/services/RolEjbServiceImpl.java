@@ -4,6 +4,8 @@ import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
+import org.utp.web.back.apirest.models.dto.RolDTO;
+import org.utp.web.back.apirest.models.mappers.RolMapper;
 import org.utp.web.back.ejb.entities.Rol;
 import org.utp.web.back.ejb.repositories.RolRepository;
 
@@ -15,10 +17,13 @@ public class RolEjbServiceImpl implements RolEjbService {
     @Inject
     private RolRepository repository;
 
+    @Inject
+    private RolMapper mapper;
+
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Rol> listado(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<RolDTO> listado(List<Integer> estados) {
+        return mapper.toDTOList( repository.findByEstadoIn(estados) );
     }
 
     @Override

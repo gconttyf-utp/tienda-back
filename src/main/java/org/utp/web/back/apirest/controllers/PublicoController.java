@@ -2,10 +2,6 @@ package org.utp.web.back.apirest.controllers;
 
 import java.util.List;
 
-import org.utp.web.back.apirest.services.MarcaService;
-import org.utp.web.back.apirest.services.ProductoService;
-import org.utp.web.back.apirest.services.TiendaService;
-
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -14,15 +10,13 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.utp.web.back.ejb.services.CategoriaEjbService;
-import org.utp.web.back.ejb.services.DepartamentoEjbService;
-import org.utp.web.back.ejb.services.GrupoEjbService;
+import org.utp.web.back.ejb.services.*;
 
 @Path("/publico")
 public class PublicoController {
 
     @Inject
-    private DepartamentoEjbService ejbService;
+    private DepartamentoEjbService departamentoEjbService;
 
     @Inject
     private GrupoEjbService grupoEjbService;
@@ -31,19 +25,19 @@ public class PublicoController {
     private CategoriaEjbService categoriaEjbService;
 
     @Inject
-    private MarcaService serviceMarca;
+    private MarcaEjbService marcaEjbService;
 
     @Inject
-    private ProductoService serviceProducto;
+    private ProductoEjbService productoEjbService;
 
     @Inject
-    private TiendaService serviceTienda;
+    private TiendaEjbService tiendaEjbService;
 
     @GET
     @Path("/{ruta: departamento|departamentos}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarDepartamentos(){
-        return Response.ok().entity(ejbService.listarDepartamentos(List.of(1))).build();
+        return Response.ok().entity(departamentoEjbService.listarDepartamentos(List.of(1))).build();
     }
 
     @GET
@@ -67,7 +61,7 @@ public class PublicoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarMarcas(){
         System.out.println("marca.listar()");
-        return Response.ok().entity(serviceMarca.listarMarca(List.of(1))).build();
+        return Response.ok().entity(marcaEjbService.listado(List.of(1))).build();
     }
 
     @GET
@@ -75,8 +69,8 @@ public class PublicoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarProductos(@QueryParam("categoria") Integer categoriaID, @QueryParam("marca") Integer marcaID){
         System.out.println("producto.listadoporcategoriaymarca()");
-        System.out.println(serviceProducto.listarProductoPorCategoriaAndMarca(categoriaID, marcaID, List.of(1)));
-        return Response.ok().entity( serviceProducto.listarProductoPorCategoriaAndMarca(categoriaID, marcaID, List.of(1)) ).build();
+        System.out.println(productoEjbService.listarProductosPorCategoriaAndMarca(categoriaID, marcaID, List.of(1)));
+        return Response.ok().entity( productoEjbService.listarProductosPorCategoriaAndMarca(categoriaID, marcaID, List.of(1)) ).build();
     }
 
     @GET
@@ -84,35 +78,35 @@ public class PublicoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarProductos2(@QueryParam("codigo") Integer categoria){
         System.out.println("producto.listarporcategoria()");
-        return Response.ok().entity(serviceProducto.listarProductosPorCategoria(categoria, List.of(1))).build();
+        return Response.ok().entity(productoEjbService.listarProductosPorCategoria(categoria, List.of(1))).build();
     }
 
     @GET
     @Path("/productos/marca")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarProductos3(@QueryParam("codigo") Integer codMarca){
-        return Response.ok().entity(serviceProducto.listarProductoPorMarca(codMarca, List.of(1))).build();
+        return Response.ok().entity(productoEjbService.listarProductosPorMarca(codMarca, List.of(1))).build();
     }
 
     @GET
     @Path("/producto/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response encontrarProducto(@PathParam("id") Integer id){
-        return Response.ok().entity(serviceProducto.encontrarProducto(id)).build();
+        return Response.ok().entity(productoEjbService.encontrarId(id)).build();
     }
 
     @GET
     @Path("/tiendas")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarTiendas(){
-        return Response.ok().entity(serviceTienda.listarTiendas(List.of(1))).build();
+        return Response.ok().entity(tiendaEjbService.listado(List.of(1))).build();
     }
 
     @GET
     @Path("/tiendasubigeo")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarTiendasUbigeo(@QueryParam("ubigeo") String codUbigeo){
-        return Response.ok().entity(serviceTienda.listarTiendasUbigeo(codUbigeo, List.of(1))).build();
+        return Response.ok().entity(tiendaEjbService.listadoUbigeo(codUbigeo, List.of(1))).build();
     }
 
 }

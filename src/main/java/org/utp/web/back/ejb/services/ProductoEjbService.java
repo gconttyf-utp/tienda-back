@@ -3,6 +3,7 @@ package org.utp.web.back.ejb.services;
 import java.util.List;
 
 import jakarta.ejb.Local;
+import org.utp.web.back.apirest.models.dto.ProductoDTO;
 import org.utp.web.back.ejb.entities.Producto;
 
 @Local
@@ -14,13 +15,13 @@ public interface ProductoEjbService {
 
     Producto buscarProducto(Integer id);
 
-    List<Producto> listarProductosPorCategoria(Integer categoria, List<Integer> estados);
+    List<ProductoDTO> listarProductosPorCategoria(Integer categoria, List<Integer> estados);
 
-    List<Producto> listarProductosPorMarca(Integer marca, List<Integer> estados);
+    List<ProductoDTO> listarProductosPorMarca(Integer marca, List<Integer> estados);
 
-    List<Producto> listarProductosPorCategoriaAndMarca(Integer categoria, Integer marca, List<Integer> estados);
+    List<ProductoDTO> listarProductosPorCategoriaAndMarca(Integer categoria, Integer marca, List<Integer> estados);
 
-    Producto encontrarId(Integer id);
+    ProductoDTO encontrarId(Integer id);
 
     Producto save(Integer id, Producto oDTO);
 

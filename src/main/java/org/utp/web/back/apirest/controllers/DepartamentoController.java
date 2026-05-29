@@ -15,14 +15,14 @@ import org.utp.web.back.ejb.services.DepartamentoEjbService;
 public class DepartamentoController {
 
     @Inject
-    private DepartamentoEjbService ejbService;
+    private DepartamentoEjbService departamentoEjbService;
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar(){
         System.out.println("departamento.listar()");
-        return Response.ok().entity(ejbService.listarDepartamentos(List.of(1))).build();
+        return Response.ok().entity(departamentoEjbService.listarDepartamentos(List.of(1))).build();
     }
 
 }

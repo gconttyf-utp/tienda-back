@@ -7,20 +7,20 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.utp.web.back.apirest.services.UbigeoService;
+import org.utp.web.back.ejb.services.UbigeoEjbService;
 
 @Path("/ubigeo")
 public class UbigeoController {
 
     @Inject
-    private UbigeoService service;
+    private UbigeoEjbService ubigeoEjbService;
 
     @GET
     @Path("/departamentos")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar(){
         System.out.println("Ubigeo.listar()");
-        return Response.ok().entity(service.listarDepartamentos()).build();
+        return Response.ok().entity(ubigeoEjbService.listarDepartamentos()).build();
     }
 
     @GET
@@ -28,7 +28,7 @@ public class UbigeoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarProvinciasDistritos(@PathParam("codigo") String codigo){
         System.out.println("Ubigeo.listarPronvinciasDistritos()");
-        return Response.ok().entity(service.listarProvinciasDistritos(codigo)).build();
+        return Response.ok().entity(ubigeoEjbService.listarProvinciasDistritos(codigo)).build();
     }
 
     @GET
@@ -36,7 +36,7 @@ public class UbigeoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response encUbigeo(@PathParam("codigo") String codigo){
         System.out.println("Ubigeo.encUbigeo()");
-        return Response.ok().entity(service.buscarUbigeo(codigo)).build();
+        return Response.ok().entity(ubigeoEjbService.buscarUbigeo(codigo)).build();
     }
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import org.utp.web.back.apirest.models.dto.MarcaDTO;
+import org.utp.web.back.apirest.models.mappers.MarcaMapper;
 import org.utp.web.back.ejb.entities.Marca;
 import org.utp.web.back.ejb.repositories.MarcaRepository;
 
@@ -15,6 +17,9 @@ public class MarcaEjbServiceImpl implements MarcaEjbService {
 
     @Inject
     private MarcaRepository repository;
+
+    @Inject
+    private MarcaMapper mapper;
 
     @Override
     public List<Marca> listarTodos() {
@@ -28,8 +33,8 @@ public class MarcaEjbServiceImpl implements MarcaEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Marca> listado(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<MarcaDTO> listado(List<Integer> estados) {
+        return mapper.toDTOList( repository.findByEstadoIn(estados) );
     }
 
     @Override
