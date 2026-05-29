@@ -3,6 +3,7 @@ package org.utp.web.back.ejb.services;
 import java.util.List;
 
 import jakarta.ejb.Local;
+import org.utp.web.back.apirest.models.dto.GrupoDTO;
 import org.utp.web.back.ejb.entities.Grupo;
 
 @Local
@@ -12,7 +13,7 @@ public interface GrupoEjbService {
 
     Grupo buscarGrupo(Integer id);
 
-    List<Grupo> listado(Integer codDepartamento, List<Integer> estados);
+    List<GrupoDTO> listado(Integer codDepartamento, List<Integer> estados);
 
     Grupo encontrarId(Integer id);
 

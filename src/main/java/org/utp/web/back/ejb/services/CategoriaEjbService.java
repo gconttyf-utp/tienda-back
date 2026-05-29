@@ -3,6 +3,7 @@ package org.utp.web.back.ejb.services;
 import java.util.List;
 
 import jakarta.ejb.Local;
+import org.utp.web.back.apirest.models.dto.CategoriaDTO;
 import org.utp.web.back.ejb.entities.Categoria;
 
 @Local
@@ -12,7 +13,7 @@ public interface CategoriaEjbService {
 
     Categoria buscarCategoria(Integer id);
 
-    List<Categoria> listado(Integer grupo, List<Integer> estados);
+    List<CategoriaDTO> listarCategoriaPorGrupo(Integer grupo, List<Integer> estados);
 
     Categoria encontrarId(Integer id);
 

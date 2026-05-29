@@ -2,9 +2,6 @@ package org.utp.web.back.apirest.controllers;
 
 import java.util.List;
 
-import org.utp.web.back.apirest.services.CategoriaService;
-import org.utp.web.back.apirest.services.DepartamentoService;
-import org.utp.web.back.apirest.services.GrupoService;
 import org.utp.web.back.apirest.services.MarcaService;
 import org.utp.web.back.apirest.services.ProductoService;
 import org.utp.web.back.apirest.services.TiendaService;
@@ -17,18 +14,21 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.utp.web.back.ejb.services.CategoriaEjbService;
+import org.utp.web.back.ejb.services.DepartamentoEjbService;
+import org.utp.web.back.ejb.services.GrupoEjbService;
 
 @Path("/publico")
 public class PublicoController {
 
     @Inject
-    private DepartamentoService serviceDepartamento;
+    private DepartamentoEjbService ejbService;
 
     @Inject
-    private GrupoService serviceGrupo;
+    private GrupoEjbService grupoEjbService;
 
     @Inject
-    private CategoriaService serviceCategoria;
+    private CategoriaEjbService categoriaEjbService;
 
     @Inject
     private MarcaService serviceMarca;
@@ -43,7 +43,7 @@ public class PublicoController {
     @Path("/{ruta: departamento|departamentos}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarDepartamentos(){
-        return Response.ok().entity(serviceDepartamento.listarDepartamentos(List.of(1))).build();
+        return Response.ok().entity(ejbService.listarDepartamentos(List.of(1))).build();
     }
 
     @GET
@@ -51,7 +51,7 @@ public class PublicoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarGrupos(@QueryParam("depa") Integer depa){
         System.out.println("grupo.listar()");
-        return Response.ok().entity(serviceGrupo.listarGrupos(depa, List.of(1))).build();
+        return Response.ok().entity(grupoEjbService.listado(depa, List.of(1))).build();
     }
 
     @GET
@@ -59,7 +59,7 @@ public class PublicoController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response listarCategorias(@QueryParam("grupo") Integer grupo){
         System.out.println("categoria.listar()");
-        return Response.ok().entity(serviceCategoria.listarCategoriaPorGrupo(grupo, List.of(1))).build();
+        return Response.ok().entity(categoriaEjbService.listarCategoriaPorGrupo(grupo, List.of(1))).build();
     }
 
     @GET

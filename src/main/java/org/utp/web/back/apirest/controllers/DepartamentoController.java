@@ -9,20 +9,20 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
-import org.utp.web.back.apirest.services.DepartamentoService;
+import org.utp.web.back.ejb.services.DepartamentoEjbService;
 
 @Path("/usuario/departamento")
 public class DepartamentoController {
 
     @Inject
-    private DepartamentoService service;
+    private DepartamentoEjbService ejbService;
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listar(){
         System.out.println("departamento.listar()");
-        return Response.ok().entity(service.listarDepartamentos(List.of(1))).build();
+        return Response.ok().entity(ejbService.listarDepartamentos(List.of(1))).build();
     }
 
 }

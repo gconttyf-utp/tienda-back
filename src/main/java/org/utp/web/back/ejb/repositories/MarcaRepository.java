@@ -2,7 +2,6 @@ package org.utp.web.back.ejb.repositories;
 
 import jakarta.data.repository.*;
 import org.utp.web.back.ejb.entities.Marca;
-import org.utp.web.back.ejb.entities.Producto;
 
 import java.util.Collection;
 import java.util.List;

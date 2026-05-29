@@ -4,7 +4,8 @@ import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
-import jakarta.transaction.Transactional;
+import org.utp.web.back.apirest.models.dto.DepartamentoDTO;
+import org.utp.web.back.apirest.models.mappers.DepartamentoMapper;
 import org.utp.web.back.ejb.entities.Departamento;
 import org.utp.web.back.ejb.repositories.DepartamentoRepository;
 
@@ -16,6 +17,9 @@ public class DepartamentoEjbServiceImpl implements DepartamentoEjbService {
 
     @Inject
     private DepartamentoRepository repository;
+
+    @Inject
+    private DepartamentoMapper departamentoMapper;
 
     @Override
     public List<Departamento> listarTodos() {
@@ -31,8 +35,8 @@ public class DepartamentoEjbServiceImpl implements DepartamentoEjbService {
     @Override
     // ESTE ES EL EQUIVALENTE EXACTO A @Transactional(readOnly = true) EN EJB
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Departamento> listarDepartamentos(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<DepartamentoDTO> listarDepartamentos(List<Integer> estados) {
+        return departamentoMapper.toDTOList(repository.findByEstadoIn(estados));
     }
 
     @Override

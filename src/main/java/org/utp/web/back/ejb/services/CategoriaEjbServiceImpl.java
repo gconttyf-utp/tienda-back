@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import org.utp.web.back.apirest.models.dto.CategoriaDTO;
+import org.utp.web.back.apirest.models.mappers.CategoriaMapper;
 import org.utp.web.back.ejb.entities.Categoria;
 import org.utp.web.back.ejb.repositories.CategoriaRepository;
 
@@ -15,6 +17,9 @@ public class CategoriaEjbServiceImpl implements CategoriaEjbService {
 
     @Inject
     private CategoriaRepository repository;
+
+    @Inject
+    private CategoriaMapper mapper;
 
     @Override
     public List<Categoria> listarPorIdGrupo(Integer idGrupo) {
@@ -28,8 +33,8 @@ public class CategoriaEjbServiceImpl implements CategoriaEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Categoria> listado(Integer grupo, List<Integer> estados) {
-        return repository.findByGrupoIdAndEstadoIn(grupo, estados);
+    public List<CategoriaDTO> listarCategoriaPorGrupo(Integer grupo, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByGrupoIdAndEstadoIn(grupo, estados) );
     }
 
     @Override

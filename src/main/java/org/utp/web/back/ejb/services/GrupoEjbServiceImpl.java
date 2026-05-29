@@ -4,6 +4,8 @@ import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import org.utp.web.back.apirest.models.dto.GrupoDTO;
+import org.utp.web.back.apirest.models.mappers.GrupoMapper;
 import org.utp.web.back.ejb.entities.Grupo;
 import org.utp.web.back.ejb.repositories.GrupoRepository;
 
@@ -15,6 +17,9 @@ public class GrupoEjbServiceImpl implements GrupoEjbService {
 
     @Inject
     private GrupoRepository repository;
+
+    @Inject
+    private GrupoMapper mapper;
 
     @Override
     public List<Grupo> listarPorIdDepartamento(Integer idDep) {
@@ -28,8 +33,8 @@ public class GrupoEjbServiceImpl implements GrupoEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Grupo> listado(Integer codDepartamento, List<Integer> estados) {
-        return repository.findByDepartamentoIdAndEstadoIn(codDepartamento, estados);
+    public List<GrupoDTO> listado(Integer codDepartamento, List<Integer> estados) {
+        return mapper.toDTOList(repository.findByDepartamentoIdAndEstadoIn(codDepartamento, estados));
     }
 
     @Override
