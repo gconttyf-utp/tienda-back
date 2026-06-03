@@ -15,9 +15,9 @@ public interface GrupoEjbService {
 
     List<GrupoDTO> listado(Integer codDepartamento, List<Integer> estados);
 
-    Grupo encontrarId(Integer id);
+    GrupoDTO encontrarId(Integer id);
 
-    Grupo save(Integer id, Grupo oDTO);
+    GrupoDTO save(Integer id, GrupoDTO oDTO);
 
     Integer estadoCero(Integer id);
 }

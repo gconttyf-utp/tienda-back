@@ -39,20 +39,20 @@ public class MarcaEjbServiceImpl implements MarcaEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Marca encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public MarcaDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Marca save(Integer id, Marca oDTO) {
+    public MarcaDTO save(Integer id, MarcaDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Marca oBD = repository.findById(id).orElse(null);
+            MarcaDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

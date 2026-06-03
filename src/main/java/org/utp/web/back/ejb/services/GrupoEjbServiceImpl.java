@@ -39,20 +39,20 @@ public class GrupoEjbServiceImpl implements GrupoEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Grupo encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public GrupoDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Grupo save(Integer id, Grupo oDTO) {
+    public GrupoDTO save(Integer id, GrupoDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Grupo oBD = repository.findById(id).orElse(null);
+            GrupoDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

@@ -39,20 +39,20 @@ public class CategoriaEjbServiceImpl implements CategoriaEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Categoria encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public CategoriaDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Categoria save(Integer id, Categoria oDTO) {
+    public CategoriaDTO save(Integer id, CategoriaDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Categoria oBD = repository.findById(id).orElse(null);
+            CategoriaDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

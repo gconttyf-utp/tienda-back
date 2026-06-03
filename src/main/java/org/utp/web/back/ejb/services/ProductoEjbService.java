@@ -23,7 +23,7 @@ public interface ProductoEjbService {
 
     ProductoDTO encontrarId(Integer id);
 
-    Producto save(Integer id, Producto oDTO);
+    ProductoDTO save(Integer id, ProductoDTO oDTO);
 
     Integer estadoCero(Integer id);
 

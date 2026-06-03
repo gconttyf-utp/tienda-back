@@ -11,9 +11,9 @@ public interface RolEjbService {
 
     List<RolDTO> listado(List<Integer> estados);
 
-    Rol encontrarId(Integer id);
+    RolDTO encontrarId(Integer id);
 
-    Rol save(Integer id, Rol oDTO);
+    RolDTO save(Integer id, RolDTO oDTO);
 
     Integer estadoCero(Integer id);
 }

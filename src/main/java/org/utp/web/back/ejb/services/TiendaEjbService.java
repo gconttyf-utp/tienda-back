@@ -13,9 +13,9 @@ public interface TiendaEjbService {
 
     List<TiendaDTO> listadoUbigeo(String ubigeo, List<Integer> estados);
 
-    Tienda encontrarId(Integer id);
+    TiendaDTO encontrarId(Integer id);
 
-    Tienda save(Integer id, Tienda oDTO);
+    TiendaDTO save(Integer id, TiendaDTO oDTO);
 
     Integer estadoCero(Integer id);
 

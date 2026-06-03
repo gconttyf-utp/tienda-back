@@ -1,17 +1,17 @@
 package org.utp.web.back.ejb.services;
 
 import jakarta.ejb.Local;
-import org.utp.web.back.ejb.entities.Almacen;
+import org.utp.web.back.apirest.models.dto.AlmacenDTO;
 
 import java.util.List;
 
 @Local
 public interface AlmacenEjbService {
 
-    List<Almacen> listado(Integer tienda);
+    List<AlmacenDTO> listado(Integer tienda);
 
-    Almacen encontrarId(Integer id);
+    AlmacenDTO encontrarId(Integer id);
 
-    Almacen save(Integer id, Almacen oDTO);
+    AlmacenDTO save(Integer id, AlmacenDTO oDTO);
 
 }

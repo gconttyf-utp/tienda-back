@@ -34,23 +34,23 @@ public class TiendaEjbServiceImpl implements TiendaEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Tienda encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public TiendaDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Tienda save(Integer id, Tienda oDTO) {
+    public TiendaDTO save(Integer id, TiendaDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Tienda oBD = repository.findById(id).orElse(null);
+            TiendaDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
 
             if ( oBD != null ){
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setDireccion(oDTO.getDireccion());
-                oBD.setUbigeo(oDTO.getUbigeo());
+                oBD.setCodUbigeo( oDTO.getCodUbigeo() );
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

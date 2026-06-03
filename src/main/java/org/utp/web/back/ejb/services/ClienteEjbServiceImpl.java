@@ -4,6 +4,8 @@ import jakarta.ejb.Stateless;
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
+import org.utp.web.back.apirest.models.dto.ClienteDTO;
+import org.utp.web.back.apirest.models.mappers.ClienteMapper;
 import org.utp.web.back.ejb.entities.Cliente;
 import org.utp.web.back.ejb.repositories.ClienteRepository;
 
@@ -15,31 +17,34 @@ public class ClienteEjbServiceImpl implements ClienteEjbService {
     @Inject
     private ClienteRepository repository;
 
+    @Inject
+    private ClienteMapper mapper;
+
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public List<Cliente> listado(List<Integer> estados) {
-        return repository.findByEstadoIn(estados);
+    public List<ClienteDTO> listado(List<Integer> estados) {
+        return mapper.toDTOList( repository.findByEstadoIn(estados) );
     }
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Cliente encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public ClienteDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Cliente save(Integer id, Cliente oDTO) {
+    public ClienteDTO save(Integer id, ClienteDTO oDTO) {
         if ( id == null || id == 0){
             //oDTO.setClave( passwordEncoder.encode( oDTO.getClave() ) );
             //return mapper.toDTO(repository.save(mapper.toEntity(oDTO)));
             return null;
         } else {
-            Cliente oBD = repository.findById(id).orElse(null);
+            ClienteDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setNombres(oDTO.getNombres());
                 oBD.setApellidos(oDTO.getApellidos());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

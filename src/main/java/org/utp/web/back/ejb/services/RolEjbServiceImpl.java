@@ -28,20 +28,20 @@ public class RolEjbServiceImpl implements RolEjbService {
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
-    public Rol encontrarId(Integer id) {
-        return repository.findById(id).orElse(null);
+    public RolDTO encontrarId(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Rol save(Integer id, Rol oDTO) {
+    public RolDTO save(Integer id, RolDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Rol oBD = repository.findById(id).orElse(null);
+            RolDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setDescripcion(oDTO.getDescripcion());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

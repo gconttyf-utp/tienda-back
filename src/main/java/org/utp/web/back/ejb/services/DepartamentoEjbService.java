@@ -15,9 +15,9 @@ public interface DepartamentoEjbService {
 
     List<DepartamentoDTO> listarDepartamentos(List<Integer> estados);
 
-    Departamento encontrarDepartamento(Integer id);
+    DepartamentoDTO encontrarDepartamento(Integer id);
 
-    Departamento salvarDepartamento(Integer id, Departamento departamento);
+    DepartamentoDTO salvarDepartamento(Integer id, DepartamentoDTO departamento);
 
     Integer eliminarDepartamento(Integer id);
 }

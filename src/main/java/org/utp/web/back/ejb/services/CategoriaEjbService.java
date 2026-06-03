@@ -15,9 +15,9 @@ public interface CategoriaEjbService {
 
     List<CategoriaDTO> listarCategoriaPorGrupo(Integer grupo, List<Integer> estados);
 
-    Categoria encontrarId(Integer id);
+    CategoriaDTO encontrarId(Integer id);
 
-    Categoria save(Integer id, Categoria oDTO);
+    CategoriaDTO save(Integer id, CategoriaDTO oDTO);
 
     Integer estadoCero(Integer id);
 

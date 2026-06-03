@@ -33,17 +33,17 @@ public class UsuarioEjbServiceImpl implements UsuarioEjbService {
     }
 
     @Override
-    public Usuario save(Integer id, Usuario oDTO) {
+    public UsuarioDTO save(Integer id, UsuarioDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Usuario oBD = repository.findById(id).orElse(null);
+            UsuarioDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
                 oBD.setNombres(oDTO.getNombres());
                 oBD.setApellidos(oDTO.getApellidos());
-                oBD.setRol(oDTO.getRol());
+                oBD.setRolId( oDTO.getRolId() );
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }

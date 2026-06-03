@@ -15,9 +15,9 @@ public interface MarcaEjbService {
 
     List<MarcaDTO> listado(List<Integer> estados);
 
-    Marca encontrarId(Integer id);
+    MarcaDTO encontrarId(Integer id);
 
-    Marca save(Integer id, Marca oDTO);
+    MarcaDTO save(Integer id, MarcaDTO oDTO);
 
     Integer estadoCero(Integer id);
 

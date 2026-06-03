@@ -4,29 +4,28 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.utp.web.back.apirest.exceptions.APIException;
+import org.utp.web.back.apirest.models.dto.RolDTO;
+import org.utp.web.back.ejb.services.RolEjbService;
 
 import java.util.List;
 
-import org.utp.web.back.apirest.exceptions.APIException;
-import org.utp.web.back.apirest.models.dto.CategoriaDTO;
-import org.utp.web.back.ejb.services.CategoriaEjbService;
-
-@Path("/usuario/categorias")
-public class CategoriaController {
+@Path("/usuario/roles")
+public class RolController {
 
     @Inject
-    private CategoriaEjbService categoriaEjbService;
+    private RolEjbService rolEjbService;
 
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listar(@QueryParam("codigo") Integer codGrupo, @QueryParam("estado") List<Integer> estadosQuery){
+    public Response listar(@QueryParam("estado") List<Integer> estadosQuery){
         List<Integer> estados = (estadosQuery == null || estadosQuery.isEmpty()) ? List.of(0, 1) : estadosQuery;
 
-        List<CategoriaDTO> listado = categoriaEjbService.listarCategoriaPorGrupo(codGrupo, estados);
+        List<RolDTO> listado = rolEjbService.listado(estados);
 
         if (listado.isEmpty()){
-            throw new APIException(404, -1, String.format("No hay categorias"));
+            throw new APIException(404, -1, String.format("No hay roles"));
         }
         return Response.ok().entity( listado ).build();
     }
@@ -35,10 +34,10 @@ public class CategoriaController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response encontrarId(@PathParam("id") Integer id){
-        CategoriaDTO oDTO = categoriaEjbService.encontrarId(id);
+        RolDTO oDTO = rolEjbService.encontrarId(id);
 
         if (oDTO == null){
-            throw new APIException(404, -1, String.format("No hay categoria con el id %d", id));
+            throw new APIException(404, -1, String.format("No hay rol con el id %d", id));
         }
         return Response.ok().entity( oDTO ).build();
     }
@@ -47,11 +46,11 @@ public class CategoriaController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response nuevo(CategoriaDTO oDTO){
-        CategoriaDTO oBD = categoriaEjbService.save(null, oDTO);
+    public Response nuevo(RolDTO oDTO){
+        RolDTO oBD = rolEjbService.save(null, oDTO);
 
         if ( oBD.getId() == null ){
-            throw new APIException(404, -1, String.format("No se ha podido crear la categoria con datos %s", oBD));
+            throw new APIException(404, -1, String.format("No se ha podido crear el rol con datos %s", oBD));
         }
         return Response.status(Response.Status.CREATED).entity( oBD ).build();
     }
@@ -60,11 +59,11 @@ public class CategoriaController {
     @Path("/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response actualizar(@PathParam("id") Integer id, CategoriaDTO oDTO){
-        CategoriaDTO oBD = categoriaEjbService.save(id, oDTO);
+    public Response actualizar(@PathParam("id") Integer id, RolDTO oDTO){
+        RolDTO oBD = rolEjbService.save(id, oDTO);
 
         if ( oBD == null || oBD.getId() == null ){
-            throw new APIException(404, -1, String.format("No se ha podido actualizar la categoria con id %d, datos %s", id, oDTO));
+            throw new APIException(404, -1, String.format("No se ha podido actualizar el rol con id %d, datos %s", id, oDTO));
         }
         return Response.ok().entity( oBD ).build();
     }
@@ -73,10 +72,10 @@ public class CategoriaController {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response estadoCero(@PathParam("id") Integer id){
-        Integer ok = categoriaEjbService.estadoCero(id);
+        Integer ok = rolEjbService.estadoCero(id);
 
         if ( ok == 0 ){
-            throw new APIException(404, -1, String.format("No se ha podido eliminar la categoria con id %d", id));
+            throw new APIException(404, -1, String.format("No se ha podido eliminar el rol con id %d", id));
         }
         return Response.status(Response.Status.ACCEPTED).build();
     }

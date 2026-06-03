@@ -19,7 +19,7 @@ public class DepartamentoEjbServiceImpl implements DepartamentoEjbService {
     private DepartamentoRepository repository;
 
     @Inject
-    private DepartamentoMapper departamentoMapper;
+    private DepartamentoMapper mapper;
 
     @Override
     public List<Departamento> listarTodos() {
@@ -36,24 +36,24 @@ public class DepartamentoEjbServiceImpl implements DepartamentoEjbService {
     // ESTE ES EL EQUIVALENTE EXACTO A @Transactional(readOnly = true) EN EJB
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public List<DepartamentoDTO> listarDepartamentos(List<Integer> estados) {
-        return departamentoMapper.toDTOList(repository.findByEstadoIn(estados));
+        return mapper.toDTOList(repository.findByEstadoIn(estados));
     }
 
     @Override
-    public Departamento encontrarDepartamento(Integer id) {
-        return repository.findById(id).orElse(null);
+    public DepartamentoDTO encontrarDepartamento(Integer id) {
+        return mapper.toDTO( repository.findById(id).orElse(null) );
     }
 
     @Override
-    public Departamento salvarDepartamento(Integer id, Departamento departamento) {
+    public DepartamentoDTO salvarDepartamento(Integer id, DepartamentoDTO departamento) {
         if ( id == null || id == 0){
-            return repository.insertar(departamento);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( departamento ) ) );
         } else {
-            Departamento departamentoBD = repository.findById(id).orElse(null);
+            DepartamentoDTO departamentoBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( departamentoBD != null ){
                 departamentoBD.setNombre(departamento.getNombre());
                 departamentoBD.setEstado(departamento.getEstado());
-                return repository.actualizar(departamentoBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( departamentoBD ) ) );
             }
             return null;
         }

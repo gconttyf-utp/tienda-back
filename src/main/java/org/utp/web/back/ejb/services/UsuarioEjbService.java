@@ -13,7 +13,7 @@ public interface UsuarioEjbService {
 
     UsuarioDTO encontrarId(Integer id);
 
-    Usuario save(Integer id, Usuario oDTO);
+    UsuarioDTO save(Integer id, UsuarioDTO oDTO);
 
     Integer estadoCero(Integer id);
 

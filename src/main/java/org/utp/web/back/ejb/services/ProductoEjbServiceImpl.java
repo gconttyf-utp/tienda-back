@@ -61,14 +61,14 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
     }
 
     @Override
-    public Producto save(Integer id, Producto oDTO) {
+    public ProductoDTO save(Integer id, ProductoDTO oDTO) {
         if ( id == null || id == 0){
-            return repository.insertar(oDTO);
+            return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            Producto oBD = repository.findById(id).orElse(null);
+            ProductoDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
-                oBD.setCategoria(oDTO.getCategoria());
-                oBD.setMarca(oDTO.getMarca());
+                oBD.setCategoriaID( oDTO.getCategoriaID() );
+                oBD.setMarcaID( oDTO.getMarcaID() );
                 oBD.setDescripcion(oDTO.getDescripcion());
                 oBD.setSku(oDTO.getSku());
                 oBD.setPrecioLista(oDTO.getPrecioLista());
@@ -76,7 +76,7 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
                 oBD.setStock(oDTO.getStock());
                 oBD.setRutaImg(oDTO.getRutaImg());
                 oBD.setEstado(oDTO.getEstado());
-                return repository.actualizar(oBD);
+                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
         }
