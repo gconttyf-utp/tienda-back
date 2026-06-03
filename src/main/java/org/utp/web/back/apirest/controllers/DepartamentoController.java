@@ -27,7 +27,7 @@ public class DepartamentoController {
         System.out.println("departamento.listar()");
 
         // 1. Definimos exactamente qué estados vamos a consultar en la BD
-        List<Integer> estadosConsultados = (estados == null || estados.isEmpty()) ? List.of(1) : estados;
+        List<Integer> estadosConsultados = (estados == null || estados.isEmpty()) ? List.of(0, 1) : estados;
 
         // 2. Ejecutamos la consulta con la lista limpia
         List<DepartamentoDTO> listarDepartamentos = departamentoEjbService.listarDepartamentos( estadosConsultados );

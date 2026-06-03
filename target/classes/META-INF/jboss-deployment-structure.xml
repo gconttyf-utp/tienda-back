@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<jboss-deployment-structure>
-    <deployment>
-        <dependencies>
-            <module name="jakarta.data.api" export="true"/>
-            <module name="org.hibernate" export="true"/>
-        </dependencies>
-    </deployment>
-</jboss-deployment-structure>
