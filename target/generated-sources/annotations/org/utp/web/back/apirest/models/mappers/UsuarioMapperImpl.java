@@ -10,7 +10,7 @@ import org.utp.web.back.ejb.entities.Usuario;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-06-03T03:22:11-0500",
+    date = "2026-06-03T03:50:44-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.7 (Oracle Corporation)"
 )
 @ApplicationScoped
