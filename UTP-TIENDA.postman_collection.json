@@ -195,14 +195,15 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/ubigeo",
+              "raw": "{{baseUrl}}/api/v1/ubigeo/departamentos",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "ubigeo"
+                "ubigeo",
+                "departamentos"
               ]
             }
           },
@@ -214,7 +215,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/ubigeo/provincias/:codigoPadre",
+              "raw": "{{baseUrl}}/api/v1/ubigeo/provinciasdistritos/:codigoPadre",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -222,7 +223,7 @@
                 "api",
                 "v1",
                 "ubigeo",
-                "provincias",
+                "provinciasdistritos",
                 ":codigoPadre"
               ],
               "variable": [
@@ -242,7 +243,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/ubigeo/distritos?codigo=150100",
+              "raw": "{{baseUrl}}/api/v1/ubigeo/provinciasdistritos/:codigoPadre",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -250,13 +251,13 @@
                 "api",
                 "v1",
                 "ubigeo",
-                "distritos"
+                "provinciasdistritos",
+                ":codigoPadre"
               ],
-              "query": [
+              "variable": [
                 {
-                  "key": "codigo",
-                  "value": "150100",
-                  "description": "150100"
+                  "key": "codigoPadre",
+                  "value": "150100"
                 }
               ]
             }
@@ -282,7 +283,7 @@
               "variable": [
                 {
                   "key": "codigo",
-                  "value": "150100",
+                  "value": "150109",
                   "description": "150100"
                 }
               ]
@@ -2237,14 +2238,14 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/cliente/clientes?estado=0&estado=1",
+              "raw": "{{baseUrl}}/api/v1/usuario/clientes?estado=0&estado=1",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "cliente",
+                "usuario",
                 "clientes"
               ],
               "query": [
@@ -2273,14 +2274,14 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/cliente/clientes/:id",
+              "raw": "{{baseUrl}}/api/v1/usuario/clientes/:id",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 "api",
                 "v1",
-                "cliente",
+                "usuario",
                 "clientes",
                 ":id"
               ],
