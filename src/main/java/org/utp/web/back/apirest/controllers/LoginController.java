@@ -2,11 +2,7 @@ package org.utp.web.back.apirest.controllers;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.BeanParam;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.utp.web.back.apirest.models.dto.ClienteDTO;
@@ -39,7 +35,7 @@ public class LoginController {
                     .entity(service.loginClienteJWT(loginDTO))
                     .build();
         }else{
-            return Response.status(Response.Status.UNAUTHORIZED).build();
+            throw new NotAuthorizedException("Las credenciales proporcionadas no son válidas en el sistema.");
         }
     }
 

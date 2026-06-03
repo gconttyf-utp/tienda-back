@@ -43,6 +43,8 @@ public class ProductoRepository_ implements ProductoRepository {
 	static final String FIND_BY_CATEGORIA_ID_AND_MARCA_ID_AND_ESTADO_IN_Integer_Integer_Collection = "SELECT o FROM Producto o WHERE o.categoria.id = :categoria AND o.marca.id = :marca AND o.estado in (:estados)";
 	static final String FIND_BY_CATEGORIA_ID_AND_ESTADO_IN_Integer_Collection = "SELECT o FROM Producto o WHERE o.categoria.id = :categoria AND o.estado in (:estados)";
 	static final String LISTAR_POR_ID_CATEGORIA_Integer = "SELECT p FROM Producto p WHERE p.categoria.id = :idCategoria";
+	static final String FIND_BY_CATEGORIA_ID_IN_AND_OFERTA_IN_AND_ESTADO_IN_Collection_Collection_Collection = "SELECT o FROM Producto o WHERE o.categoria.id in (:categorias) AND o.oferta in (:ofertas) AND o.estado in (:estados)";
+	static final String FIND_BY_OFERTA_IN_AND_ESTADO_IN_Collection_Collection = "SELECT o FROM Producto o WHERE o.oferta in (:ofertas) AND o.estado in (:estados)";
 
 	
 	/**
@@ -159,6 +161,25 @@ public class ProductoRepository_ implements ProductoRepository {
 		}
 	}
 	
+	/**
+	 * Execute the query {@value #FIND_BY_CATEGORIA_ID_IN_AND_OFERTA_IN_AND_ESTADO_IN_Collection_Collection_Collection}.
+	 *
+	 * @see org.utp.web.back.ejb.repositories.ProductoRepository#findByCategoriaIdInAndOfertaInAndEstadoIn(Collection,Collection,Collection)
+	 **/
+	@Override
+	public List<Producto> findByCategoriaIdInAndOfertaInAndEstadoIn(Collection<Integer> categorias, Collection<Integer> ofertas, Collection<Integer> estados) {
+		try {
+			return session.createSelectionQuery(FIND_BY_CATEGORIA_ID_IN_AND_OFERTA_IN_AND_ESTADO_IN_Collection_Collection_Collection, Producto.class)
+				.setParameter("categorias", categorias)
+				.setParameter("ofertas", ofertas)
+				.setParameter("estados", estados)
+				.getResultList();
+		}
+		catch (PersistenceException exception) {
+			throw new DataException(exception.getMessage(), exception);
+		}
+	}
+	
 	@Override
 	public Producto save(@Nonnull Producto entity) {
 		if (entity == null) throw new IllegalArgumentException("Null entity");
@@ -209,6 +230,24 @@ public class ProductoRepository_ implements ProductoRepository {
 		}
 		catch (StaleStateException exception) {
 			throw new OptimisticLockingFailureException(exception.getMessage(), exception);
+		}
+		catch (PersistenceException exception) {
+			throw new DataException(exception.getMessage(), exception);
+		}
+	}
+	
+	/**
+	 * Execute the query {@value #FIND_BY_OFERTA_IN_AND_ESTADO_IN_Collection_Collection}.
+	 *
+	 * @see org.utp.web.back.ejb.repositories.ProductoRepository#findByOfertaInAndEstadoIn(Collection,Collection)
+	 **/
+	@Override
+	public List<Producto> findByOfertaInAndEstadoIn(Collection<Integer> ofertas, Collection<Integer> estados) {
+		try {
+			return session.createSelectionQuery(FIND_BY_OFERTA_IN_AND_ESTADO_IN_Collection_Collection, Producto.class)
+				.setParameter("ofertas", ofertas)
+				.setParameter("estados", estados)
+				.getResultList();
 		}
 		catch (PersistenceException exception) {
 			throw new DataException(exception.getMessage(), exception);

@@ -38,6 +38,7 @@ import org.utp.web.back.ejb.entities.Categoria_;
 @Generated("org.hibernate.processor.HibernateProcessor")
 public class CategoriaRepository_ implements CategoriaRepository {
 
+	static final String FIND_BY_GRUPO_ID_IN_AND_ESTADO_IN_Collection_Collection = "SELECT o FROM Categoria o WHERE o.grupo.id in (:grupos) AND o.estado in (:estados)";
 	static final String LISTAR_POR_ID_GRUPO_Integer = "SELECT c FROM Categoria c WHERE c.grupo.id = :idGrupo";
 	static final String FIND_BY_GRUPO_ID_AND_ESTADO_IN_Integer_Collection = "SELECT o FROM Categoria o WHERE o.grupo.id = :idGrupo AND o.estado in (:estados)";
 
@@ -51,6 +52,24 @@ public class CategoriaRepository_ implements CategoriaRepository {
 		}
 		catch (StaleStateException exception) {
 			throw new OptimisticLockingFailureException(exception.getMessage(), exception);
+		}
+		catch (PersistenceException exception) {
+			throw new DataException(exception.getMessage(), exception);
+		}
+	}
+	
+	/**
+	 * Execute the query {@value #FIND_BY_GRUPO_ID_IN_AND_ESTADO_IN_Collection_Collection}.
+	 *
+	 * @see org.utp.web.back.ejb.repositories.CategoriaRepository#findByGrupoIdInAndEstadoIn(Collection,Collection)
+	 **/
+	@Override
+	public List<Categoria> findByGrupoIdInAndEstadoIn(Collection<Integer> grupos, Collection<Integer> estados) {
+		try {
+			return session.createSelectionQuery(FIND_BY_GRUPO_ID_IN_AND_ESTADO_IN_Collection_Collection, Categoria.class)
+				.setParameter("grupos", grupos)
+				.setParameter("estados", estados)
+				.getResultList();
 		}
 		catch (PersistenceException exception) {
 			throw new DataException(exception.getMessage(), exception);

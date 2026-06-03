@@ -71,4 +71,10 @@ public class CategoriaEjbServiceImpl implements CategoriaEjbService {
         return 0;
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<CategoriaDTO> listadoxGrupos(List<Integer> grupos, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByGrupoIdInAndEstadoIn(grupos, estados) );
+    }
+
 }

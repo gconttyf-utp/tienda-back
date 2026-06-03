@@ -21,4 +21,7 @@ public interface CategoriaRepository extends CrudRepository<Categoria, Integer>{
     @Update
     Categoria actualizar(Categoria entidad);
 
+    @Query("SELECT o FROM Categoria o WHERE o.grupo.id in (:grupos) AND o.estado in (:estados)")
+    List<Categoria> findByGrupoIdInAndEstadoIn(Collection<Integer>  grupos, Collection<Integer> estados);
+
 }

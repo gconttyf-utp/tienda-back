@@ -21,4 +21,6 @@ public interface CategoriaEjbService {
 
     Integer estadoCero(Integer id);
 
+    List<CategoriaDTO> listadoxGrupos(List<Integer> grupos, List<Integer> estados);
+
 }

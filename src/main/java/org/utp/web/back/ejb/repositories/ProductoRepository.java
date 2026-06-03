@@ -30,4 +30,10 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>{
     @Update
     Producto actualizar(Producto entidad);
 
+    @Query("SELECT o FROM Producto o WHERE o.categoria.id in (:categorias) AND o.oferta in (:ofertas) AND o.estado in (:estados)")
+    List<Producto> findByCategoriaIdInAndOfertaInAndEstadoIn(Collection<Integer> categorias, Collection<Integer> ofertas, Collection<Integer> estados);
+
+    @Query("SELECT o FROM Producto o WHERE o.oferta in (:ofertas) AND o.estado in (:estados)")
+    List<Producto> findByOfertaInAndEstadoIn(Collection<Integer> ofertas, Collection<Integer> estados);
+
 }

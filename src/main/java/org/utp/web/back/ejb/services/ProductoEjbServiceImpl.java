@@ -95,4 +95,16 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
         return 0;
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<ProductoDTO> listarProductosOfertaDepartamento(List<Integer> categorias, List<Integer> ofertas, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByCategoriaIdInAndOfertaInAndEstadoIn(categorias, ofertas, estados) );
+    }
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<ProductoDTO> listarProductosOfertas(List<Integer> ofertas, List<Integer> estados) {
+        return mapper.toDTOList( repository.findByOfertaInAndEstadoIn(ofertas, estados) );
+    }
+
 }
