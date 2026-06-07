@@ -85,9 +85,18 @@ public class PublicoController {
     @GET
     @Path("/productos")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarProductos(@QueryParam("categoria") Integer categoriaID, @QueryParam("marca") Integer marcaID){
-        System.out.println("producto.listadoporcategoriaymarca()");
-        List<ProductoDTO> listarProductos = productoEjbService.listarProductosPorCategoriaAndMarca(categoriaID, marcaID, List.of(1));
+    public Response listarProductos(@QueryParam("depa") Integer departamentoID,
+                                    @QueryParam("grupo") Integer grupoID,
+                                    @QueryParam("categoria") Integer categoriaID,
+                                    @QueryParam("marca") Integer marcaID){
+        System.out.println("producto.listarProductos()");
+
+        Integer departamento = (departamentoID == null) ? 0 : departamentoID;
+        Integer grupo = (grupoID != null) ? grupoID : 0;
+        Integer categoria = (categoriaID != null) ? categoriaID : 0;
+        Integer marca = (marcaID != null) ? marcaID : 0;
+
+        List<ProductoDTO> listarProductos = productoEjbService.listarProductos(departamento, grupo, categoria, marca, List.of(1));
         if (listarProductos.isEmpty()){
             throw new APIException(404, -1, String.format("No hay productos para la categoria %d y la marca %d", categoriaID, marcaID));
         }

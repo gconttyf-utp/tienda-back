@@ -36,4 +36,78 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer>{
     @Query("SELECT o FROM Producto o WHERE o.oferta in (:ofertas) AND o.estado in (:estados)")
     List<Producto> findByOfertaInAndEstadoIn(Collection<Integer> ofertas, Collection<Integer> estados);
 
+    /***
+     *
+     * @param departamentoId
+     * @param grupoId
+     * @param categoriaId
+     * @param marcaId
+     * @param estados
+     * @return
+     */
+    @Query("SELECT p FROM Producto p " +
+            "WHERE p.categoria.grupo.departamento.id = :departamentoId " +
+            "AND p.categoria.grupo.id = :grupoId " +
+            "AND p.categoria.id = :categoriaId " +
+            "AND p.marca.id = :marcaId " +
+            "AND p.estado in (:estados)")
+    List<Producto> buscarPorFiltrosMultiplesSimplificado(
+            @Param("departamentoId") Integer departamentoId,
+            @Param("grupoId") Integer grupoId,
+            @Param("categoriaId") Integer categoriaId,
+            @Param("marcaId") Integer marcaId,
+            @Param("estados") Collection<Integer> estados
+    );
+
+    /**
+     *
+     * @param departamentoId
+     * @param grupoId
+     * @param categoriaId
+     * @param estados
+     * @return
+     */
+    @Query("SELECT p FROM Producto p " +
+            "WHERE p.categoria.grupo.departamento.id = :departamentoId " +
+            "AND p.categoria.grupo.id = :grupoId " +
+            "AND p.categoria.id = :categoriaId " +
+            "AND p.estado in (:estados)")
+    List<Producto> buscarPorFiltrosMultiplesSimplificado(
+            @Param("departamentoId") Integer departamentoId,
+            @Param("grupoId") Integer grupoId,
+            @Param("categoriaId") Integer categoriaId,
+            @Param("estados") Collection<Integer> estados
+    );
+
+    /**
+     *
+     * @param departamentoId
+     * @param grupoId
+     * @param estados
+     * @return
+     */
+    @Query("SELECT p FROM Producto p " +
+            "WHERE p.categoria.grupo.departamento.id = :departamentoId " +
+            "AND p.categoria.grupo.id = :grupoId " +
+            "AND p.estado in (:estados)")
+    List<Producto> buscarPorFiltrosMultiplesSimplificado(
+            @Param("departamentoId") Integer departamentoId,
+            @Param("grupoId") Integer grupoId,
+            @Param("estados") Collection<Integer> estados
+    );
+
+    /**
+     *
+     * @param departamentoId
+     * @param estados
+     * @return
+     */
+    @Query("SELECT p FROM Producto p " +
+            "WHERE p.categoria.grupo.departamento.id = :departamentoId " +
+            "AND p.estado in (:estados)")
+    List<Producto> buscarPorFiltrosMultiplesSimplificado(
+            @Param("departamentoId") Integer departamentoId,
+            @Param("estados") Collection<Integer> estados
+    );
+
 }

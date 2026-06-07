@@ -107,4 +107,21 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
         return mapper.toDTOList( repository.findByOfertaInAndEstadoIn(ofertas, estados) );
     }
 
+    @Override
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
+    public List<ProductoDTO> listarProductos(Integer departamento, Integer grupo, Integer categoria, Integer marca, List<Integer> estados) {
+        //return mapper.toDTOList( repository.buscarPorFiltrosMultiplesSimplificado(22, 139, 40, 114, estados) );
+        if ( departamento >0 && grupo > 0 && categoria > 0 && marca > 0){
+            return mapper.toDTOList( repository.buscarPorFiltrosMultiplesSimplificado(departamento, grupo, categoria, marca, estados) );
+        } else if ( departamento >0 && grupo > 0 && categoria > 0 && marca <= 0){
+            return mapper.toDTOList( repository.buscarPorFiltrosMultiplesSimplificado(departamento, grupo, categoria, estados) );
+        } else if ( departamento >0 && grupo > 0 && categoria <= 0 && marca <= 0){
+            return mapper.toDTOList( repository.buscarPorFiltrosMultiplesSimplificado(departamento, grupo, estados) );
+        } else if ( departamento >0 && grupo <= 0 && categoria <= 0 && marca <= 0){
+            return mapper.toDTOList( repository.buscarPorFiltrosMultiplesSimplificado(departamento, estados) );
+        } else {
+            return null;
+        }
+    }
+
 }

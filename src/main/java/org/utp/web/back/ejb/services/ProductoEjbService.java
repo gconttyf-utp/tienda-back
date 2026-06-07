@@ -31,4 +31,6 @@ public interface ProductoEjbService {
 
     List<ProductoDTO> listarProductosOfertas(List<Integer> ofertas, List<Integer> estados);
 
+    List<ProductoDTO> listarProductos(Integer departamento, Integer grupo, Integer categoria, Integer marca, List<Integer> estados);
+
 }
