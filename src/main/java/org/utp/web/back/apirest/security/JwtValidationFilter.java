@@ -13,7 +13,9 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.SecurityContext;
 import jakarta.ws.rs.ext.Provider;
+import org.utp.web.back.apirest.util.LoginTypeContext;
 import org.utp.web.back.ejb.entities.Cliente;
+import org.utp.web.back.ejb.entities.Usuario;
 import org.utp.web.back.ejb.services.AutorizacionService;
 import org.utp.web.back.apirest.util.TokenJwtConfig;
 
@@ -28,6 +30,9 @@ public class JwtValidationFilter implements ContainerRequestFilter {
 
     @Inject
     private AutorizacionService autorizacionServiceRemote;
+
+    @Inject
+    private LoginTypeContext loginContext;
 
     private static final List<String> RUTAS_PERMITIDAS = Arrays.asList(
             "/autorizacion/login",
@@ -79,17 +84,34 @@ public class JwtValidationFilter implements ContainerRequestFilter {
                     .parseSignedClaims(jwtToken)
                     .getPayload();
 
+            String subject = claims.getSubject();
+            System.out.println("subject = " + subject);
+
             String userEmail = claims.get("useremail", String.class);
             if (userEmail == null) {
                 abortarPeticion(requestContext, "Token inválido: Sin usuario.");
                 return;
             }
 
+            if ( "USUARIO".equalsIgnoreCase(subject) ){
+                loginContext.setUsuarioLogin(true);
+            } else {
+                loginContext.setUsuarioLogin(false);
+            }
+
             // 4. Validar contra la BD
-            Cliente cliente = autorizacionServiceRemote.login(userEmail, 1);
-            if (cliente == null) {
-                abortarPeticion(requestContext, "Usuario no existe o está inactivo.");
-                return;
+            if ( "USUARIO".equalsIgnoreCase(subject) ){
+                Usuario usuario = autorizacionServiceRemote.loginUsuario(userEmail, 1);
+                if ( usuario == null ){
+                    abortarPeticion(requestContext, "Usuario no existe o está inactivo.");
+                    return;
+                }
+            } else {
+                Cliente cliente = autorizacionServiceRemote.login(userEmail, 1);
+                if (cliente == null) {
+                    abortarPeticion(requestContext, "Cliente no existe o está inactivo.");
+                    return;
+                }
             }
 
             // 5. Establecer el SecurityContext de JAX-RS (Reemplaza a SecurityContextHolder de Spring)

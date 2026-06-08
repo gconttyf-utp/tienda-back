@@ -2,6 +2,7 @@ package org.utp.web.back.ejb.services;
 
 import jakarta.ejb.TransactionAttribute;
 import jakarta.ejb.TransactionAttributeType;
+import org.utp.web.back.apirest.util.LoginTypeContext;
 import org.utp.web.back.ejb.entities.Cliente;
 import org.utp.web.back.ejb.entities.Usuario;
 import org.utp.web.back.ejb.repositories.ClienteRepository;
@@ -18,6 +19,9 @@ public class AutorizacionServiceImpl implements AutorizacionService{
 
     @Inject
     private UsuarioRepository usuarioRepository;
+
+    @Inject
+    private LoginTypeContext loginContext;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
