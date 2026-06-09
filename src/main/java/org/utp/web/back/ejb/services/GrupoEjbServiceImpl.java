@@ -52,6 +52,7 @@ public class GrupoEjbServiceImpl implements GrupoEjbService {
             if ( oBD != null ){
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setEstado(oDTO.getEstado());
+                oBD.setDepartamentoId( oDTO.getDepartamentoId() );
                 return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
