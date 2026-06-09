@@ -54,7 +54,10 @@ public class UsuarioEjbServiceImpl implements UsuarioEjbService {
         Usuario oBD = repository.findById(id).orElse(null);
 
         if ( oBD != null ) {
-            oBD.setEstado(0);
+            if ( oBD.getEstado() == 1 )
+                oBD.setEstado(0);
+            else
+                oBD.setEstado(1);
             repository.actualizar(oBD);
             return 1;
         }

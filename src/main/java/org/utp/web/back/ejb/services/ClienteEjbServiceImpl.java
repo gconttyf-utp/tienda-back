@@ -56,7 +56,10 @@ public class ClienteEjbServiceImpl implements ClienteEjbService {
 
         if ( oBD != null ) {
             //repository.deleteById(oBD.getId());
-            oBD.setEstado(0);
+            if ( oBD.getEstado() == 1 )
+                oBD.setEstado(0);
+            else
+                oBD.setEstado(1);
             repository.actualizar(oBD);
             return 1;
         }

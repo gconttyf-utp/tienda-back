@@ -61,12 +61,15 @@ public class DepartamentoEjbServiceImpl implements DepartamentoEjbService {
 
     @Override
     public Integer eliminarDepartamento(Integer id) {
-        Departamento departamentoBD = repository.findById(id).orElse(null);
+        Departamento oBD = repository.findById(id).orElse(null);
 
-        if ( departamentoBD != null ) {
+        if ( oBD != null ) {
             //repository.deleteById(departamentoBD.getId());
-            departamentoBD.setEstado(0);
-            repository.actualizar(departamentoBD);
+            if ( oBD.getEstado() == 1 )
+                oBD.setEstado(0);
+            else
+                oBD.setEstado(1);
+            repository.actualizar(oBD);
             return 1;
         }
         return 0;
