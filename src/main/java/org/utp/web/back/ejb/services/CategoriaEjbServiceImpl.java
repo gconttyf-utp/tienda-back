@@ -50,8 +50,9 @@ public class CategoriaEjbServiceImpl implements CategoriaEjbService {
         } else {
             CategoriaDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
             if ( oBD != null ){
-                oBD.setNombre(oDTO.getNombre());
-                oBD.setEstado(oDTO.getEstado());
+                oBD.setNombre( oDTO.getNombre() );
+                oBD.setEstado( oDTO.getEstado() );
+                oBD.setGrupoId( oDTO.getGrupoId() );
                 return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
             return null;
