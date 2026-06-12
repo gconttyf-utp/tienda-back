@@ -49,6 +49,11 @@ public class TiendaEjbServiceImpl implements TiendaEjbService {
                 oBD.setNombre(oDTO.getNombre());
                 oBD.setDireccion(oDTO.getDireccion());
                 oBD.setCodUbigeo( oDTO.getCodUbigeo() );
+                oBD.setHorario( oDTO.getHorario() );
+                oBD.setLatitud( oDTO.getLatitud() );
+                oBD.setLongitud( oDTO.getLongitud() );
+                oBD.setTelefono( oDTO.getTelefono() );
+                oBD.setImagenUrl( oDTO.getImagenUrl() );
                 oBD.setEstado(oDTO.getEstado());
                 return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
