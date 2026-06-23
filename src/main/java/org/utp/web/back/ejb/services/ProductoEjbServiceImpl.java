@@ -63,6 +63,9 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
     @Override
     public ProductoDTO save(Integer id, ProductoDTO oDTO) {
         if ( id == null || id == 0){
+            System.out.println("Nuevo Registro Producto");
+            System.out.println("Producto DTO= " + oDTO.toString() );
+            System.out.println("Producto Entity= " + mapper.toEntity( oDTO ).toString() );
             return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
             ProductoDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
