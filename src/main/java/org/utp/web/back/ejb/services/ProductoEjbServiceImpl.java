@@ -1,5 +1,6 @@
 package org.utp.web.back.ejb.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import jakarta.ejb.TransactionAttribute;
@@ -66,6 +67,9 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
             System.out.println("Nuevo Registro Producto");
             System.out.println("Producto DTO= " + oDTO.toString() );
             System.out.println("Producto Entity= " + mapper.toEntity( oDTO ).toString() );
+            if ( oDTO.getCreatedAt() == null ){
+                oDTO.setCreatedAt( LocalDateTime.now() );
+            }
             return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
             ProductoDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
