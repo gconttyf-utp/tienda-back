@@ -75,6 +75,12 @@ public class ProductoEjbServiceImpl implements ProductoEjbService {
                 oBD.setPrecioOnline(oDTO.getPrecioOnline());
                 oBD.setStock(oDTO.getStock());
                 oBD.setRutaImg(oDTO.getRutaImg());
+                oBD.setSlug( oDTO.getSlug() );
+                oBD.setUnidad( oDTO.getUnidad() );
+                oBD.setColorPlaceholder( oDTO.getColorPlaceholder() );
+                oBD.setDescripcionLarga( oDTO.getDescripcionLarga() );
+                oBD.setOferta( oDTO.getOferta() );
+                oBD.setDestacado( oDTO.getDestacado() );
                 oBD.setEstado(oDTO.getEstado());
                 return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
             }
