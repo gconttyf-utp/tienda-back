@@ -6,6 +6,7 @@ import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
 import org.utp.web.back.apirest.models.dto.UsuarioDTO;
 import org.utp.web.back.apirest.models.mappers.UsuarioMapper;
+import org.utp.web.back.apirest.security.DatabaseIdentityStore;
 import org.utp.web.back.ejb.entities.Usuario;
 import org.utp.web.back.ejb.repositories.UsuarioRepository;
 
@@ -13,6 +14,9 @@ import java.util.List;
 
 @Stateless
 public class UsuarioEjbServiceImpl implements UsuarioEjbService {
+
+    @Inject
+    private DatabaseIdentityStore identityStore;
 
     @Inject
     private UsuarioRepository repository;
@@ -35,6 +39,7 @@ public class UsuarioEjbServiceImpl implements UsuarioEjbService {
     @Override
     public UsuarioDTO save(Integer id, UsuarioDTO oDTO) {
         if ( id == null || id == 0){
+            oDTO.setClave( identityStore.encode( oDTO.getClave() ) );
             return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
             UsuarioDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
@@ -69,8 +74,8 @@ public class UsuarioEjbServiceImpl implements UsuarioEjbService {
         Usuario oBD = repository.findById(id).orElse(null);
 
         if ( oBD != null ) {
-            oBD.setClave( newClave );
-            repository.actualizar(oBD);
+            oBD.setClave( identityStore.encode( newClave ) );
+            repository.actualizar( oBD );
             return 1;
         }
         return 0;

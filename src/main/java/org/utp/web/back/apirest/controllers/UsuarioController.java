@@ -92,6 +92,7 @@ public class UsuarioController {
     @PUT
     @Path("/newclave/{id}")
     public Response actualizarClave(@PathParam("id") Integer id, Map<String, String> newClave){
+        System.out.println("actualizarClave= " + newClave.get("newClave"));
         String newClaveLimpia = newClave.get("newClave");
         Integer ok = usuarioEjbService.actualizarClave(id, newClaveLimpia);
 
