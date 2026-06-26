@@ -85,6 +85,7 @@ public class ClienteController {
     @Path("/newclave/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response actualizarClave(@PathParam("id") Integer id, Map<String, String> newClave){
+        System.out.println("actualizarClave= " + newClave.get("newClave"));
         String newClaveLimpia = newClave.get("newClave");
         Integer ok = clienteEjbService.actualizarClave(id, newClaveLimpia);
 

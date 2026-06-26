@@ -6,6 +6,7 @@ import jakarta.ejb.TransactionAttributeType;
 import jakarta.inject.Inject;
 import org.utp.web.back.apirest.models.dto.ClienteDTO;
 import org.utp.web.back.apirest.models.mappers.ClienteMapper;
+import org.utp.web.back.apirest.security.DatabaseIdentityStore;
 import org.utp.web.back.ejb.entities.Cliente;
 import org.utp.web.back.ejb.repositories.ClienteRepository;
 
@@ -19,6 +20,9 @@ public class ClienteEjbServiceImpl implements ClienteEjbService {
 
     @Inject
     private ClienteMapper mapper;
+
+    @Inject
+    private DatabaseIdentityStore identityStore;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)
@@ -71,7 +75,7 @@ public class ClienteEjbServiceImpl implements ClienteEjbService {
         Cliente oBD = repository.findById(id).orElse(null);
 
         if ( oBD != null ) {
-            oBD.setClave( newClave );
+            oBD.setClave( identityStore.encode( newClave ) );
             repository.actualizar(oBD);
             return 1;
         }
