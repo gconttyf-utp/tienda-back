@@ -1,6 +1,7 @@
 package org.utp.web.back.ejb.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -22,10 +23,18 @@ public class Almacen implements Serializable {
     @JoinColumn(name = "producto_id", referencedColumnName = "id", nullable = false)
     private Producto producto;
 
-    @Column(name = "fecha_ingreso")
+    @CreationTimestamp
+    @Column(name = "fecha_ingreso", updatable = false)
     private LocalDateTime fechaIngreso;
 
     private Integer cantidad;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.fechaIngreso == null) {
+            this.fechaIngreso = LocalDateTime.now();
+        }
+    }
 
     public Integer getId() {
         return id;
@@ -56,7 +65,11 @@ public class Almacen implements Serializable {
     }
 
     public void setFechaIngreso(LocalDateTime fechaIngreso) {
-        this.fechaIngreso = fechaIngreso;
+        if (fechaIngreso != null) {
+            this.fechaIngreso = fechaIngreso;
+        } else if (this.fechaIngreso == null) {
+            this.fechaIngreso = LocalDateTime.now();
+        }
     }
 
     public Integer getCantidad() {

@@ -21,4 +21,10 @@ public interface TiendaRepository extends CrudRepository<Tienda, Integer> {
     @Update
     Tienda actualizar(Tienda entidad);
 
+    @Query("SELECT t FROM Tienda t WHERE t.estado = 1 AND t.almacenes IS EMPTY")
+    List<Tienda> findTiendasSinAlmacen();
+
+    @Query("SELECT t FROM Tienda t WHERE t.estado = 1 AND t.almacenes IS NOT EMPTY")
+    List<Tienda> findTiendasConAlmacen();
+
 }

@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.utp.web.back.apirest.exceptions.APIException;
 import org.utp.web.back.apirest.models.dto.AlmacenDTO;
+import org.utp.web.back.apirest.models.dto.TiendaDTO;
 import org.utp.web.back.ejb.services.AlmacenEjbService;
 
 import java.util.List;
@@ -64,6 +65,24 @@ public class AlmacenController {
             throw new APIException(404, -1, String.format("No se ha podido actualizar el almacen con id %d, datos %s", id, oDTO));
         }
         return Response.ok().entity( oBD ).build();
+    }
+
+    @GET
+    @Path("/tiendas")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarTiendas(@QueryParam("activadas") Integer activadas){
+        List<TiendaDTO> listado = null;
+
+        if ( activadas == 0 ){
+            listado = almacenEjbService.listadoTiendasSinAlmacen();
+        } else if ( activadas == 1 ){
+            listado = almacenEjbService.listadoTiendasConAlmacen();
+        }
+
+        if (listado.isEmpty() || listado == null){
+            throw new APIException(404, -1, String.format("No hay tiendas"));
+        }
+        return Response.ok().entity( listado ).build();
     }
 
 }
