@@ -25,4 +25,9 @@ public class AlmacenDTO {
 
     private Integer cantidad;
 
+    public AlmacenDTO(Integer tiendaId, Integer productoId, Long cantidadTotal) {
+        this.tiendaId = tiendaId;
+        this.productoId = productoId;
+        this.cantidad = (cantidadTotal != null) ? cantidadTotal.intValue() : 0;
+    }
 }

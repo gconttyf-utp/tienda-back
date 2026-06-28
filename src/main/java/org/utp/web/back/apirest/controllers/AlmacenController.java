@@ -85,4 +85,16 @@ public class AlmacenController {
         return Response.ok().entity( listado ).build();
     }
 
+    @GET
+    @Path("/acumulados")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarAcumulado(@QueryParam("tienda") Integer tienda){
+        List<AlmacenDTO> listado = almacenEjbService.listadoAcumulado(tienda);
+
+        if (listado.isEmpty()){
+            throw new APIException(404, -1, String.format("No hay almacenes"));
+        }
+        return Response.ok().entity( listado ).build();
+    }
+
 }

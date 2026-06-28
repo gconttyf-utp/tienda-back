@@ -72,4 +72,9 @@ public class AlmacenEjbServiceImpl implements AlmacenEjbService {
         return mapperTienda.toDTOList( repositoryTienda.findTiendasConAlmacen() );
     }
 
+    @Override
+    public List<AlmacenDTO> listadoAcumulado(Integer idTienda) {
+        return repository.listarPorIdTiendaAcumulado(idTienda);
+    }
+
 }

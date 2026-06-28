@@ -19,4 +19,6 @@ public interface AlmacenEjbService {
 
     List<TiendaDTO> listadoTiendasConAlmacen();
 
+    List<AlmacenDTO> listadoAcumulado(Integer idTienda);
+
 }
