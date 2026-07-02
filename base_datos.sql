@@ -2903,3 +2903,71 @@ INSERT INTO `tienda_vega`.`tiendas`(`nombre`,`direccion`,`cod_ubigeo`,`horario`,
 INSERT INTO `tienda_vega`.`tiendas`(`nombre`,`direccion`,`cod_ubigeo`,`horario`,`telefono`,`imagen_url`,`lat`,`lng`) VALUES('VegaMarket Pueblo Libre','Av. Bolivar 980','150121','Lun-Dom 7:00-22:00','970000013','OIP (19).webp',-12.0768,-77.0647);
 INSERT INTO `tienda_vega`.`tiendas`(`nombre`,`direccion`,`cod_ubigeo`,`horario`,`telefono`,`imagen_url`,`lat`,`lng`) VALUES('VegaMarket Magdalena','Av. Brasil 3500','150120','Lun-Dom 7:00-22:00','970000014','OIP (20).webp',-12.0916,-77.0679);
 INSERT INTO `tienda_vega`.`tiendas`(`nombre`,`direccion`,`cod_ubigeo`,`horario`,`telefono`,`imagen_url`,`lat`,`lng`) VALUES('VegaMarket San Borja','Av. Aviacion 3100','150130','Lun-Dom 7:00-22:00','970000015','OIP (21).webp',-12.0961,-77.0047);
+
+CREATE TABLE `tienda_vega`.`pedidos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT NOT NULL,
+  `tienda_id` INT NOT NULL,
+  `total` DECIMAL(11,2) NOT NULL,
+  `estado` ENUM('PENDIENTE_PAGO', 'PENDIENTE_DESPACHO', 'PENDIENTE_ENTREGA', 'ENTREGADO') NOT NULL DEFAULT 'PENDIENTE_PAGO',
+  `fecha_creacion` DATETIME NOT NULL,
+  `fecha_pago` DATETIME NULL,
+  `fecha_despacho` DATETIME NULL,
+  `fecha_recojo` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pedido_cliente_idx` (`cliente_id` ASC) VISIBLE,
+  INDEX `fk_pedido_tienda_idx` (`tienda_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pedido_cliente`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `tienda_vega`.`clientes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedido_tienda`
+    FOREIGN KEY (`tienda_id`)
+    REFERENCES `tienda_vega`.`tiendas` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `tienda_vega`.`pedidos_detalles` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `pedido_id` INT NOT NULL,
+  `producto_id` INT NOT NULL,
+  `cantidad` INT NOT NULL,
+  `subtotal` DECIMAL(11,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_pdetalles_pedido_idx` (`pedido_id` ASC) VISIBLE,
+  INDEX `fk_pdetalles_producto_idx` (`producto_id` ASC) VISIBLE,
+  CONSTRAINT `fk_pdetalles_pedido`
+    FOREIGN KEY (`pedido_id`)
+    REFERENCES `tienda_vega`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pdetalles_producto`
+    FOREIGN KEY (`producto_id`)
+    REFERENCES `tienda_vega`.`productos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+CREATE TABLE `tienda_vega`.`reclamos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT NOT NULL,
+  `fecha_creacion` DATETIME NOT NULL,
+  `fecha_atencion` DATETIME NULL,
+  `pedido_id` INT NOT NULL,
+  `comentario` TEXT NOT NULL,
+  `comentario_respuesta` TEXT NULL,
+  `estado` ENUM('PENDIENTE', 'ATENDIDO') NOT NULL DEFAULT 'PENDIENTE',
+  PRIMARY KEY (`id`),
+  INDEX `fk_reclamo_cliente_idx` (`cliente_id` ASC) VISIBLE,
+  INDEX `fk_reclamo_pedido_idx` (`pedido_id` ASC) VISIBLE,
+  CONSTRAINT `fk_reclamo_cliente`
+    FOREIGN KEY (`cliente_id`)
+    REFERENCES `tienda_vega`.`clientes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_reclamo_pedido`
+    FOREIGN KEY (`pedido_id`)
+    REFERENCES `tienda_vega`.`pedidos` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
