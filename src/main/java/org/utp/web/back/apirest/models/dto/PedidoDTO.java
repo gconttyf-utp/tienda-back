@@ -9,6 +9,8 @@ import org.utp.web.back.ejb.entities.enums.EstadoPedido;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
@@ -38,4 +40,5 @@ public class PedidoDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaRecojo;
 
+    private List<PedidoDetalleDTO> detalles = new ArrayList<>();
 }
