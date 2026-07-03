@@ -2971,3 +2971,8 @@ CREATE TABLE `tienda_vega`.`reclamos` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
+INSERT INTO `tienda_vega`.`pedidos`(`cliente_id`, `tienda_id`, `total`, `fecha_creacion`) VALUES(1, 1, 150.00, CURRENT_DATE);
+
+INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 2, 5, 137.5);
+INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 3, 6, 45.0);
+INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 4, 7, 62.3);

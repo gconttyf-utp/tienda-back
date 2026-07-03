@@ -1,19 +1,114 @@
 package org.utp.web.back.apirest.controllers;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import org.utp.web.back.apirest.exceptions.APIException;
+import org.utp.web.back.apirest.models.dto.MarcaDTO;
+import org.utp.web.back.apirest.models.dto.PedidoDTO;
+import org.utp.web.back.ejb.services.PedidoEjbService;
+
+import java.util.List;
 
 @Path("/{tipo : usuario|cliente}/pedidos")
 public class PedidoController {
 
+    @Inject
+    private PedidoEjbService pedidoEjbService;
+
     @GET
     @Path("/")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerPedidos() {
-        return Response.ok("Lista de reclamos para: ").build();
+    public Response obtenerPedidos(@PathParam("tipo") String tipo) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        List<PedidoDTO> listado = pedidoEjbService.listarTodosConDetalle();
+
+        return Response.ok().entity( listado ).build();
+    }
+
+    @POST
+    @Path("/")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response nuevo(@PathParam("tipo") String tipo, PedidoDTO oDTO){
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        PedidoDTO oBD = pedidoEjbService.nuevo( oDTO );
+
+        if ( oBD.getId() == null ){
+            throw new APIException(404, -1, String.format("No se ha podido crear el pedido con datos %s", oBD));
+        }
+        return Response.status(Response.Status.CREATED).entity( oBD ).build();
+    }
+
+    @GET
+    @Path("/actualizarpago/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarPago(@PathParam("tipo") String tipo, @PathParam("id") Integer id){
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        PedidoDTO oDTO = pedidoEjbService.actualizarPago( id );
+
+        if (oDTO == null){
+            throw new APIException(404, -1, String.format("No hay pedido con el id %d", id));
+        }
+        return Response.ok().entity( oDTO ).build();
+    }
+
+    @GET
+    @Path("/actualizardespacho/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarDespacho(@PathParam("tipo") String tipo, @PathParam("id") Integer id){
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        PedidoDTO oDTO = pedidoEjbService.actualizarDespacho( id );
+
+        if (oDTO == null){
+            throw new APIException(404, -1, String.format("No hay pedido con el id %d", id));
+        }
+        return Response.ok().entity( oDTO ).build();
+    }
+
+    @GET
+    @Path("/actualizarrecojo/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response actualizarRecojo(@PathParam("tipo") String tipo, @PathParam("id") Integer id){
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        PedidoDTO oDTO = pedidoEjbService.actualizarRecojo( id );
+
+        if (oDTO == null){
+            throw new APIException(404, -1, String.format("No hay pedido con el id %d", id));
+        }
+        return Response.ok().entity( oDTO ).build();
     }
 
 }

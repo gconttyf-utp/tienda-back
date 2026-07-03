@@ -8,7 +8,7 @@ import org.utp.web.back.ejb.entities.Pedido;
 
 import java.util.List;
 
-@Mapper(componentModel = "cdi", builder = @Builder(disableBuilder = true))
+@Mapper(componentModel = "cdi", uses = {PedidoDetalleMapper.class}, builder = @Builder(disableBuilder = true))
 public interface PedidoMapper {
 
     @Mapping(source = "clienteID", target = "cliente.id")

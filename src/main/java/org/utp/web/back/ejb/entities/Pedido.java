@@ -161,6 +161,7 @@ public class Pedido implements Serializable {
                 ", fechaPago=" + fechaPago +
                 ", fechaDespacho=" + fechaDespacho +
                 ", fechaRecojo=" + fechaRecojo +
+                ", detalles.size=" + (detalles != null ? detalles.size() : "null") +
                 '}';
     }
 }
