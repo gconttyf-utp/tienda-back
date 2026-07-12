@@ -41,4 +41,6 @@ public class PedidoDTO {
     private LocalDateTime fechaRecojo;
 
     private List<PedidoDetalleDTO> detalles = new ArrayList<>();
+
+    private Integer tipoPago;
 }

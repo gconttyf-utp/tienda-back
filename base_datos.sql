@@ -2976,3 +2976,28 @@ INSERT INTO `tienda_vega`.`pedidos`(`cliente_id`, `tienda_id`, `total`, `fecha_c
 INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 2, 5, 137.5);
 INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 3, 6, 45.0);
 INSERT INTO `tienda_vega`.`pedidos_detalles` (`pedido_id`, `producto_id`, `cantidad`, `subtotal`) VALUES(1, 4, 7, 62.3);
+
+CREATE TABLE `tienda_vega`.`tipo_pago` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(45) NOT NULL,
+  `estado` INT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`));
+
+INSERT INTO `tienda_vega`.`tipo_pago` (`descripcion`, `estado`) VALUES ('SIN DEFINIR', '1');
+INSERT INTO `tienda_vega`.`tipo_pago` (`descripcion`, `estado`) VALUES ('EFECTIVO', '1');
+INSERT INTO `tienda_vega`.`tipo_pago` (`descripcion`, `estado`) VALUES ('TARJETA', '1');
+INSERT INTO `tienda_vega`.`tipo_pago` (`descripcion`, `estado`) VALUES ('QR', '1');
+INSERT INTO `tienda_vega`.`tipo_pago` (`descripcion`, `estado`) VALUES ('YAPE', '1');
+
+ALTER TABLE `tienda_vega`.`pedidos` 
+ADD COLUMN `tipo_pago` INT NOT NULL DEFAULT 1 AFTER `fecha_recojo`,
+ADD INDEX `fk_pedido_tipopago_idx` (`tipo_pago` ASC) VISIBLE;
+;
+ALTER TABLE `tienda_vega`.`pedidos` 
+ADD CONSTRAINT `fk_pedido_tipopago`
+  FOREIGN KEY (`tipo_pago`)
+  REFERENCES `tienda_vega`.`tipo_pago` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+

@@ -4,10 +4,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import org.utp.web.back.apirest.models.dto.PedidoDTO;
 import org.utp.web.back.apirest.models.mappers.PedidoMapper;
-import org.utp.web.back.ejb.entities.Cliente;
-import org.utp.web.back.ejb.entities.Pedido;
-import org.utp.web.back.ejb.entities.Producto;
-import org.utp.web.back.ejb.entities.Tienda;
+import org.utp.web.back.ejb.entities.*;
 import org.utp.web.back.ejb.entities.enums.EstadoPedido;
 import org.utp.web.back.ejb.repositories.*;
 
@@ -34,10 +31,14 @@ public class PedidoEjbServiceImpl implements PedidoEjbService {
     private ProductoRepository productoRepository;
 
     @Inject
+    private TipoPagoRepository tipoPagoRepository;
+
+    @Inject
     private PedidoMapper mapper;
 
     @Override
     public PedidoDTO nuevo(PedidoDTO oDTO) {
+        oDTO.setTipoPago(1);
         System.out.println("Pedido DTO entrante= " + oDTO);
 
         // 1. Convertir el DTO a una entidad Pedido (aún con referencias transient)
@@ -82,20 +83,35 @@ public class PedidoEjbServiceImpl implements PedidoEjbService {
     }
 
     @Override
-    public PedidoDTO actualizarPago(Integer id) {
+    public PedidoDTO actualizarPago(Integer id, Integer pagoId) {
         if (id == null || id == 0) {
             throw new IllegalArgumentException("El ID del pedido es requerido para actualizar el pago.");
         }
-        
-        int n = repository.confirmarPago( id, EstadoPedido.PENDIENTE_DESPACHO, LocalDateTime.now() );
 
-        if ( n <= 0 ){
-            return null;
+        if (pagoId == null || pagoId == 0) {
+            throw new IllegalArgumentException("El ID del pedido es requerido para actualizar el pago.");
         }
 
-        PedidoDTO pedido = mapper.toDTO( repository.encontrarID( id ) );
+        // 1. Cargar la entidad Pedido con todas sus relaciones necesarias para el DTO.
+        Pedido pedidoBD = repository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Pedido no encontrado con ID: " + id));
 
-        return pedido;
+        // 2. Cargar la entidad TipoPago que se va a asignar.
+        TipoPago tipoPago = tipoPagoRepository.findById(pagoId)
+                .orElseThrow(() -> new NoSuchElementException("Tipo de pago no encontrado con ID: " + pagoId));
+
+        // 3. Modificar los atributos de la entidad en memoria.
+        pedidoBD.setEstado(EstadoPedido.PENDIENTE_DESPACHO);
+        pedidoBD.setFechaPago(LocalDateTime.now());
+        pedidoBD.setTipoPago(tipoPago); // Asignar la entidad TipoPago gestionada
+
+        // 4. Guardar la entidad. JPA detectará los cambios y generará el UPDATE.
+        Pedido pedidoActualizado = repository.actualizar(pedidoBD);
+
+        Pedido pedidoReturn = repository.findByIdWithRelations(id).orElse(null);
+
+        // 5. Devolver el DTO. Ahora no habrá LazyInitializationException.
+        return mapper.toDTO(pedidoReturn);
     }
 
     @Override
@@ -110,7 +126,7 @@ public class PedidoEjbServiceImpl implements PedidoEjbService {
             return null;
         }
 
-        PedidoDTO pedido = mapper.toDTO( repository.encontrarID( id ) );
+        PedidoDTO pedido = mapper.toDTO( repository.findByIdWithRelations(id).orElse(null) );
 
         return pedido;
     }
@@ -127,7 +143,7 @@ public class PedidoEjbServiceImpl implements PedidoEjbService {
             return null;
         }
 
-        PedidoDTO pedido = mapper.toDTO( repository.encontrarID( id ) );
+        PedidoDTO pedido = mapper.toDTO( repository.findByIdWithRelations(id).orElse(null) );
 
         return pedido;
     }

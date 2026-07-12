@@ -14,10 +14,12 @@ public interface PedidoMapper {
     @Mapping(source = "clienteID", target = "cliente.id")
     @Mapping(source = "tiendaID", target = "tienda.id")
     @Mapping(target = "estado", defaultValue = "PENDIENTE_PAGO")
+    @Mapping(source = "tipoPago", target = "tipoPago.id", defaultValue = "1")
     Pedido toEntity(PedidoDTO dto);
 
     @Mapping(source = "cliente.id", target = "clienteID")
     @Mapping(source = "tienda.id", target = "tiendaID")
+    @Mapping(source = "tipoPago.id", target = "tipoPago")
     PedidoDTO toDTO(Pedido entity);
 
     List<PedidoDTO> toDTOList(List<Pedido> entities);

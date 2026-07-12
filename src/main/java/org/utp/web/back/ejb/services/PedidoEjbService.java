@@ -11,7 +11,7 @@ public interface PedidoEjbService {
 
     PedidoDTO nuevo(PedidoDTO oDTO);
 
-    PedidoDTO actualizarPago(Integer id);
+    PedidoDTO actualizarPago(Integer id, Integer pago);
 
     PedidoDTO actualizarDespacho(Integer id);
 

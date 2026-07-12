@@ -54,10 +54,10 @@ public class PedidoController {
         return Response.status(Response.Status.CREATED).entity( oBD ).build();
     }
 
-    @GET
+    @PUT
     @Path("/actualizarpago/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response actualizarPago(@PathParam("tipo") String tipo, @PathParam("id") Integer id){
+    public Response actualizarPago(@PathParam("tipo") String tipo, @PathParam("id") Integer id, @QueryParam("pago") Integer pago){
         // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
         if ("usuario".equals(tipo)) {
             System.out.println("Petición desde la ruta de usuario");
@@ -65,7 +65,7 @@ public class PedidoController {
             System.out.println("Petición desde la ruta de cliente");
         }
 
-        PedidoDTO oDTO = pedidoEjbService.actualizarPago( id );
+        PedidoDTO oDTO = pedidoEjbService.actualizarPago( id, pago );
 
         if (oDTO == null){
             throw new APIException(404, -1, String.format("No hay pedido con el id %d", id));
@@ -73,7 +73,7 @@ public class PedidoController {
         return Response.ok().entity( oDTO ).build();
     }
 
-    @GET
+    @PUT
     @Path("/actualizardespacho/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response actualizarDespacho(@PathParam("tipo") String tipo, @PathParam("id") Integer id){
@@ -92,7 +92,7 @@ public class PedidoController {
         return Response.ok().entity( oDTO ).build();
     }
 
-    @GET
+    @PUT
     @Path("/actualizarrecojo/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response actualizarRecojo(@PathParam("tipo") String tipo, @PathParam("id") Integer id){

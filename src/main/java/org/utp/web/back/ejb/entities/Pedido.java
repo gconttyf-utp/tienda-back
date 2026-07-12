@@ -30,6 +30,11 @@ public class Pedido implements Serializable {
     @JoinColumn(name = "tienda_id", referencedColumnName = "id", nullable = false)
     private Tienda tienda;
 
+    // Relacion con TipoPago
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tipo_pago", referencedColumnName = "id", nullable = false)
+    private TipoPago tipoPago;
+
     // DECIMAL(11,2) se mapea con BigDecimal para precisión financiera
     @Column(nullable = false, precision = 11, scale = 2)
     private BigDecimal total;
@@ -149,6 +154,14 @@ public class Pedido implements Serializable {
     public void setDetalles(List<PedidoDetalle> detalles) {
         this.detalles = detalles;
     }
+
+    public TipoPago getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(TipoPago tipoPago) {
+        this.tipoPago = tipoPago;
+    }
     // --- FIN GETTERS Y SETTERS ---
 
     @Override
@@ -161,7 +174,7 @@ public class Pedido implements Serializable {
                 ", fechaPago=" + fechaPago +
                 ", fechaDespacho=" + fechaDespacho +
                 ", fechaRecojo=" + fechaRecojo +
-                ", detalles.size=" + (detalles != null ? detalles.size() : "null") +
+                //", detalles.size=" + (detalles != null ? detalles.size() : "null") +
                 '}';
     }
 }
