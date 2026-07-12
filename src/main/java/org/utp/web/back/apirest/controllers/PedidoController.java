@@ -1,12 +1,14 @@
 package org.utp.web.back.apirest.controllers;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.utp.web.back.apirest.exceptions.APIException;
-import org.utp.web.back.apirest.models.dto.MarcaDTO;
 import org.utp.web.back.apirest.models.dto.PedidoDTO;
+import org.utp.web.back.apirest.util.TokenJwtConfig;
 import org.utp.web.back.ejb.services.PedidoEjbService;
 
 import java.util.List;
@@ -38,13 +40,28 @@ public class PedidoController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response nuevo(@PathParam("tipo") String tipo, PedidoDTO oDTO){
+    public Response nuevo(@PathParam("tipo") String tipo,
+                          @HeaderParam("Authorization") String authorizationHeader,
+                          PedidoDTO oDTO){
         // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
         if ("usuario".equals(tipo)) {
             System.out.println("Petición desde la ruta de usuario");
         } else if ("cliente".equals(tipo)) {
             System.out.println("Petición desde la ruta de cliente");
         }
+
+        String loginJWT = "";
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            loginJWT = authorizationHeader.substring(7);
+        }
+        Claims claims = Jwts.parser()
+                .verifyWith(TokenJwtConfig.SECRET_KEY)
+                .build()
+                .parseSignedClaims(loginJWT)
+                .getPayload();
+        Integer clienteID = claims.get("id", Integer.class);
+
+        oDTO.setClienteID( clienteID );
 
         PedidoDTO oBD = pedidoEjbService.nuevo( oDTO );
 

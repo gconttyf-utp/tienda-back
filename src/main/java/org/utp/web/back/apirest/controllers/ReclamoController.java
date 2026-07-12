@@ -1,11 +1,14 @@
 package org.utp.web.back.apirest.controllers;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.utp.web.back.apirest.exceptions.APIException;
 import org.utp.web.back.apirest.models.dto.ReclamoDTO;
+import org.utp.web.back.apirest.util.TokenJwtConfig;
 import org.utp.web.back.ejb.services.ReclamoEjbService;
 
 import java.util.List;
@@ -49,10 +52,10 @@ public class ReclamoController {
     }
 
     @GET
-    @Path("/cliente")
+    @Path("/cliente/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response obtenerReclamosPorCliente(@PathParam("tipo") String tipo, @QueryParam("id") Integer clienteId) {
-
+    public Response obtenerReclamosPorCliente(@PathParam("tipo") String tipo, @PathParam("id") Integer clienteId) {
+        System.out.println("Ingresando a obtenerReclamosPorCliente");
         // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
         if ("usuario".equals(tipo)) {
             System.out.println("Petición desde la ruta de usuario");
@@ -61,6 +64,35 @@ public class ReclamoController {
         }
 
         List<ReclamoDTO> listado = reclamoEjbService.listarPorCliente(clienteId);
+
+        return Response.ok().entity( listado ).build();
+    }
+
+    @GET
+    @Path("/cliente")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerReclamosCliente(@PathParam("tipo") String tipo,
+                                           @HeaderParam("Authorization") String authorizationHeader) {
+        System.out.println("Ingresando a obtenerReclamosCliente");
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        String loginJWT = "";
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            loginJWT = authorizationHeader.substring(7);
+        }
+        Claims claims = Jwts.parser()
+                .verifyWith(TokenJwtConfig.SECRET_KEY)
+                .build()
+                .parseSignedClaims(loginJWT)
+                .getPayload();
+        Integer clienteID = claims.get("id", Integer.class);
+
+        List<ReclamoDTO> listado = reclamoEjbService.listarPorCliente(clienteID);
 
         return Response.ok().entity( listado ).build();
     }
