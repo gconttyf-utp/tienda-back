@@ -120,7 +120,9 @@ public class ReclamoController {
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response nuevo(@PathParam("tipo") String tipo, ReclamoDTO oDTO) {
+    public Response nuevo(@PathParam("tipo") String tipo,
+                          @HeaderParam("Authorization") String authorizationHeader,
+                          ReclamoDTO oDTO) {
 
         // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
         if ("usuario".equals(tipo)) {
@@ -128,6 +130,19 @@ public class ReclamoController {
         } else if ("cliente".equals(tipo)) {
             System.out.println("Petición desde la ruta de cliente");
         }
+
+        String loginJWT = "";
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            loginJWT = authorizationHeader.substring(7);
+        }
+        Claims claims = Jwts.parser()
+                .verifyWith(TokenJwtConfig.SECRET_KEY)
+                .build()
+                .parseSignedClaims(loginJWT)
+                .getPayload();
+        Integer clienteID = claims.get("id", Integer.class);
+
+        oDTO.setClienteID( clienteID );
 
         ReclamoDTO oBD = reclamoEjbService.save(0, oDTO);
 
