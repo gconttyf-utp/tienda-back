@@ -6,9 +6,11 @@ import org.utp.web.back.apirest.models.dto.ClienteDTO;
 import org.utp.web.back.apirest.models.dto.ReclamoDTO;
 import org.utp.web.back.apirest.models.mappers.ClienteMapper;
 import org.utp.web.back.apirest.models.mappers.ReclamoMapper;
+import org.utp.web.back.ejb.entities.Reclamo;
 import org.utp.web.back.ejb.entities.enums.EstadoReclamo;
 import org.utp.web.back.ejb.repositories.ReclamoRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Stateless
@@ -26,24 +28,33 @@ public class ReclamoEjbServiceImpl implements  ReclamoEjbService {
     @Override
     public ReclamoDTO save(Integer id, ReclamoDTO oDTO) {
         if ( id == null || id == 0){
+            oDTO.setFechaCreacion( LocalDateTime.now() );
+            oDTO.setEstado( EstadoReclamo.PENDIENTE );
             return mapper.toDTO( repository.insertar( mapper.toEntity( oDTO ) ) );
         } else {
-            ReclamoDTO oBD = mapper.toDTO( repository.findById(id).orElse(null) );
-            if ( oBD != null ){
-                return mapper.toDTO( repository.actualizar( mapper.toEntity( oBD ) ) );
-            }
-            return null;
+            System.out.println("ID = " + id + " oDTO = " + oDTO);
+
+            Reclamo reclamo = repository.findById(id)
+                    .orElseThrow( () -> new IllegalArgumentException( "Reclamo no encontrado" ) );
+
+            reclamo.setComentarioRespuesta( oDTO.getComentarioRespuesta() );
+            reclamo.setFechaAtencion( LocalDateTime.now() );
+            reclamo.setEstado( EstadoReclamo.ATENDIDO );
+
+            repository.actualizar( reclamo );
+
+            return repository.findByIdWithRelations(id).map( mapper::toDTO ).orElse(null);
         }
     }
 
     @Override
     public ReclamoDTO encontrarID(Integer id) {
-        return repository.findById(id).map( mapper::toDTO ).orElse(null);
+        return repository.findByIdWithRelations(id).map( mapper::toDTO ).orElse(null);
     }
 
     @Override
     public List<ReclamoDTO> listarTodos() {
-        return mapper.toDTOList( repository.findAll().toList() );
+        return mapper.toDTOList( repository.findTodosWithRelations() );
     }
 
     @Override
