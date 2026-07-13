@@ -112,6 +112,40 @@ public class PedidoController {
         return Response.ok().entity( listado ).build();
     }
 
+    @GET
+    @Path("/pendientedespacho")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarPedidosPendienteDespacho(@PathParam("tipo") String tipo) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        List<PedidoDTO> listado = pedidoEjbService.listarPorEstado( EstadoPedido.PENDIENTE_DESPACHO );
+
+        return Response.ok().entity( listado ).build();
+    }
+
+    @GET
+    @Path("/pendienteentrega")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listarPedidosPendienteEntrega(@PathParam("tipo") String tipo) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        List<PedidoDTO> listado = pedidoEjbService.listarPorEstado( EstadoPedido.PENDIENTE_ENTREGA );
+
+        return Response.ok().entity( listado ).build();
+    }
+
     @POST
     @Path("/")
     @Consumes(MediaType.APPLICATION_JSON)

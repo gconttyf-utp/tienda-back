@@ -37,7 +37,12 @@ public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
     /**
      * Lista los pedidos por un estado específico.
      */
-    @Query("SELECT p FROM Pedido p WHERE p.estado = :estado")
+    @Query("SELECT p FROM Pedido p " +
+            "LEFT JOIN FETCH p.cliente " +
+            "LEFT JOIN FETCH p.tienda " +
+            "LEFT JOIN FETCH p.tipoPago " +
+            "LEFT JOIN FETCH p.detalles " +
+            "WHERE p.estado = :estado")
     List<Pedido> findByEstado(@Param("estado") EstadoPedido estado);
 
     /**

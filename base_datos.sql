@@ -3000,4 +3000,6 @@ ADD CONSTRAINT `fk_pedido_tipopago`
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
 
+INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo@nomail.com', 'PBKDF2WithHmacSHA256:3072:Jarq4kesr1qLT+RsI3iONK7MBdNXaOcSGAbjJ489pFUPHltXOisXVqFlAzvoSvQbWj8lZPD+fZlVc2lNh1FSsw==:C6P1rI0+QuIVkODlyCHKk/L+st2IiDyo1POvLpyYiZc=', 'Web Nombres', 'Web Apellidos', '1');
+INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo2@nomail.com', 'PBKDF2WithHmacSHA256:3072:W/7gofwfL4z3JSkjfF/gQZyYKwADNu/MwqEvduJ6kWIsU/xT5t/N1UMllBLvGvUCRF5XScb+ZZZ6+5Pl+rIEtg==:Mner1g3mI0w/5udGLkJl+TgrQyRpVvFiaBWsYyGMcdY=', 'Web Nombres 2', 'Web Apellidos 2', '1');
 
