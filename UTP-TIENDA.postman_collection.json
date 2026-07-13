@@ -3328,6 +3328,92 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "reportes",
+      "item": [
+        {
+          "name": "diario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/reportes/diario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "reportes",
+                "diario"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "semanal",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/reportes/semanal",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "reportes",
+                "semanal"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "mensual",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/reportes/mensual",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "reportes",
+                "mensual"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "event": [
