@@ -2594,7 +2594,10 @@ CHANGE COLUMN `clave` `clave` VARCHAR(200) NOT NULL ;
 ALTER TABLE `tienda_vega`.`usuario` 
 CHANGE COLUMN `estado` `estado` INT NOT NULL DEFAULT 1 ;
 
-INSERT INTO `tienda_vega`.`usuario` (`nombres`, `apellidos`, `usuario`, `clave`, `rol_id`) VALUES ('ADMIN', 'ADMIN', 'admin', 'PBKDF2WithHmacSHA256:3072:i6/epsRCc8X5v10OeqmiEdMbsHKk+Qi2M4qT0l7oVXIrQXf7qjysAAzgTgKFrgb0i8c2NV8RmF1Ptv5kbuIBXA==:ue1PSKjd+qmqfsi1EWYo9oSc5yE4xAcHLDFKhxgQ6uU=', '1');
+INSERT INTO `tienda_vega`.`usuario` (`nombres`, `apellidos`, `usuario`, `clave`, `rol_id`) VALUES ('ADMIN', 'ADMIN', 'admin@tiendavega.pe', 'PBKDF2WithHmacSHA256:3072:i6/epsRCc8X5v10OeqmiEdMbsHKk+Qi2M4qT0l7oVXIrQXf7qjysAAzgTgKFrgb0i8c2NV8RmF1Ptv5kbuIBXA==:ue1PSKjd+qmqfsi1EWYo9oSc5yE4xAcHLDFKhxgQ6uU=', '1');
+
+INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo@nomail.com', 'PBKDF2WithHmacSHA256:3072:Jarq4kesr1qLT+RsI3iONK7MBdNXaOcSGAbjJ489pFUPHltXOisXVqFlAzvoSvQbWj8lZPD+fZlVc2lNh1FSsw==:C6P1rI0+QuIVkODlyCHKk/L+st2IiDyo1POvLpyYiZc=', 'Web Nombres', 'Web Apellidos', '1');
+INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo2@nomail.com', 'PBKDF2WithHmacSHA256:3072:W/7gofwfL4z3JSkjfF/gQZyYKwADNu/MwqEvduJ6kWIsU/xT5t/N1UMllBLvGvUCRF5XScb+ZZZ6+5Pl+rIEtg==:Mner1g3mI0w/5udGLkJl+TgrQyRpVvFiaBWsYyGMcdY=', 'Web Nombres 2', 'Web Apellidos 2', '1');
 
 ALTER TABLE `tienda_vega`.`tiendas` 
 ADD COLUMN `estado` INT NOT NULL DEFAULT 1 AFTER `cod_ubigeo`;
@@ -2999,7 +3002,4 @@ ADD CONSTRAINT `fk_pedido_tipopago`
   REFERENCES `tienda_vega`.`tipo_pago` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
-
-INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo@nomail.com', 'PBKDF2WithHmacSHA256:3072:Jarq4kesr1qLT+RsI3iONK7MBdNXaOcSGAbjJ489pFUPHltXOisXVqFlAzvoSvQbWj8lZPD+fZlVc2lNh1FSsw==:C6P1rI0+QuIVkODlyCHKk/L+st2IiDyo1POvLpyYiZc=', 'Web Nombres', 'Web Apellidos', '1');
-INSERT INTO `tienda_vega`.`clientes`(`correo`,`clave`,`nombres`,`apellidos`,`estado`) VALUES ('correo2@nomail.com', 'PBKDF2WithHmacSHA256:3072:W/7gofwfL4z3JSkjfF/gQZyYKwADNu/MwqEvduJ6kWIsU/xT5t/N1UMllBLvGvUCRF5XScb+ZZZ6+5Pl+rIEtg==:Mner1g3mI0w/5udGLkJl+TgrQyRpVvFiaBWsYyGMcdY=', 'Web Nombres 2', 'Web Apellidos 2', '1');
 
