@@ -88,7 +88,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"correo\": \"correo@nomail.com\",\n    \"clave\": \"123456789\",\n    \"nombres\": \"Web Nombres\",\n    \"apellidos\": \"Web Apellidos\"\n}",
+              "raw": "{\n    \"correo\": \"correo2@nomail.com\",\n    \"clave\": \"123456789\",\n    \"nombres\": \"Web Nombres 2\",\n    \"apellidos\": \"Web Apellidos 2\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -137,7 +137,7 @@
               "urlencoded": [
                 {
                   "key": "usuario",
-                  "value": "admin",
+                  "value": "admin@tiendavega.pe",
                   "type": "text",
                   "uuid": "e435f471-7092-42c4-a35f-cc32abc8d55a"
                 },
@@ -394,7 +394,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "{{baseUrl}}/api/v1/publico/productos?categoria=1&marca=2",
+              "raw": "{{baseUrl}}/api/v1/publico/productos?depa=22&grupo=139&categoria=40&marca=114",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -406,12 +406,26 @@
               ],
               "query": [
                 {
+                  "key": "depa",
+                  "value": "22",
+                  "description": "22",
+                  "type": "text"
+                },
+                {
+                  "key": "grupo",
+                  "value": "139",
+                  "description": "139",
+                  "type": "text"
+                },
+                {
                   "key": "categoria",
-                  "value": "1"
+                  "value": "40",
+                  "description": "40"
                 },
                 {
                   "key": "marca",
-                  "value": "2"
+                  "value": "114",
+                  "description": "114"
                 }
               ]
             }
@@ -2541,7 +2555,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nombre\": \"PVEA PRUEBA\",\r\n    \"direccion\": \"Av. Naranjal S/N\",\r\n    \"codUbigeo\": \"150107\"\r\n}",
+              "raw": "{\r\n    \"nombre\": \"PVEA PRUEBA\",\r\n    \"direccion\": \"Av. Naranjal S/N\",\r\n    \"estado\": 1,\r\n    \"codUbigeo\": \"150107\",\r\n    \"horario\": \"Lun-Dom 7:00-22:00\",\r\n    \"telefono\": \"999999999\",\r\n    \"imagenUrl\": \"\",\r\n    \"latitud\": -12.0954,\r\n    \"longitud\": -77.0365\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2576,7 +2590,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"nombre\": \"PVEA HUANDOY\",\r\n    \"direccion\": \"Av. Naranjal S/N\",\r\n    \"estado\": 4,\r\n    \"codUbigeo\": \"150103\"\r\n}",
+              "raw": "{\r\n    \"nombre\": \"PVEA HUANDOY\",\r\n    \"direccion\": \"Av. Naranjal S/N\",\r\n    \"estado\": 1,\r\n    \"codUbigeo\": \"150107\",\r\n    \"horario\": \"Lun-Dom 7:00-22:00\",\r\n    \"telefono\": \"999999999\",\r\n    \"imagenUrl\": \"\",\r\n    \"latitud\": -12.0954,\r\n    \"longitud\": -77.0365\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2598,7 +2612,7 @@
               "variable": [
                 {
                   "key": "id",
-                  "value": "2"
+                  "value": "17"
                 }
               ]
             }
@@ -2631,7 +2645,682 @@
               "variable": [
                 {
                   "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "almacen",
+      "item": [
+        {
+          "name": "tiendas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/almacenes/tiendas?activadas=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "almacenes",
+                "tiendas"
+              ],
+              "query": [
+                {
+                  "key": "activadas",
+                  "value": "0"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "almacenes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/almacenes/?tiendas=1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "almacenes",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "tiendas",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "almacenes acumulado",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/almacenes/acumulados?tienda=2",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "almacenes",
+                "acumulados"
+              ],
+              "query": [
+                {
+                  "key": "tienda",
                   "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reclamos",
+      "item": [
+        {
+          "name": "reclamos usuario",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/reclamos/pruebareclamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "reclamos",
+                "pruebareclamos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamos cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos/pruebareclamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos",
+                "pruebareclamos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamos Cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos/cliente",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos",
+                "cliente"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamos Por Cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos/cliente/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos",
+                "cliente",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"pedidoID\": 1,\r\n    \"comentario\": \"El producto de leche llegó en mal estado, uno se encuentra vencido\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reclamo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"comentarioRespuesta\": \"Producto Cambiado\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/reclamos/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "reclamos",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "pedidos",
+      "item": [
+        {
+          "name": "pedidos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedido",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Cliente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/cliente",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "cliente"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Cliente Pendiente Pago",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/clientependientepago",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "clientependientepago"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Pendiente Despacho",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/usuario/pedidos/pendientedespacho",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "usuario",
+                "pedidos",
+                "pendientedespacho"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Pendiente Entrega",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/pendienteentrega",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "pendienteentrega"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"tiendaID\": 1,\r\n    \"total\": 244.80,\r\n    \"detalles\": [\r\n        {\r\n            \"productoID\": 2,\r\n            \"cantidad\": 7,\r\n            \"subtotal\": 62.30\r\n        },\r\n        {\r\n            \"productoID\": 3,\r\n            \"cantidad\": 6,\r\n            \"subtotal\": 45.00\r\n        },\r\n        {\r\n            \"productoID\": 4,\r\n            \"cantidad\": 5,\r\n            \"subtotal\": 137.50\r\n        }\r\n    ]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Actualizar Pago",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/actualizarpago/:id?pago=5",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "actualizarpago",
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "pago",
+                  "value": "5"
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Actualizar Despacho",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/actualizardespacho/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "actualizardespacho",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "pedidos Actualizar Recojo",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "{{tienda_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/cliente/pedidos/actualizarrecojo/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "cliente",
+                "pedidos",
+                "actualizarrecojo",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
                 }
               ]
             }
