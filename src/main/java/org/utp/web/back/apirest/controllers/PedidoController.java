@@ -9,6 +9,7 @@ import jakarta.ws.rs.core.Response;
 import org.utp.web.back.apirest.exceptions.APIException;
 import org.utp.web.back.apirest.models.dto.PedidoDTO;
 import org.utp.web.back.apirest.util.TokenJwtConfig;
+import org.utp.web.back.ejb.entities.enums.EstadoPedido;
 import org.utp.web.back.ejb.services.PedidoEjbService;
 
 import java.util.List;
@@ -32,6 +33,81 @@ public class PedidoController {
         }
 
         List<PedidoDTO> listado = pedidoEjbService.listarTodosConDetalle();
+
+        return Response.ok().entity( listado ).build();
+    }
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPedido(@PathParam("tipo") String tipo, @PathParam("id") Integer id) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        PedidoDTO pedidoDTO = pedidoEjbService.encontrarID( id );
+
+        return Response.ok().entity( pedidoDTO ).build();
+    }
+
+    @GET
+    @Path("/cliente")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPedidosCliente(@PathParam("tipo") String tipo,
+                                          @HeaderParam("Authorization") String authorizationHeader) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        String loginJWT = "";
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            loginJWT = authorizationHeader.substring(7);
+        }
+        Claims claims = Jwts.parser()
+                .verifyWith(TokenJwtConfig.SECRET_KEY)
+                .build()
+                .parseSignedClaims(loginJWT)
+                .getPayload();
+        Integer clienteID = claims.get("id", Integer.class);
+
+        List<PedidoDTO> listado = pedidoEjbService.listarPorCliente( clienteID );
+
+        return Response.ok().entity( listado ).build();
+    }
+
+    @GET
+    @Path("/clientependientepago")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response obtenerPedidosClientePendientePago(@PathParam("tipo") String tipo,
+                                   @HeaderParam("Authorization") String authorizationHeader) {
+
+        // Opcional: Puedes usar la variable 'tipo' si necesitas lógica diferente
+        if ("usuario".equals(tipo)) {
+            System.out.println("Petición desde la ruta de usuario");
+        } else if ("cliente".equals(tipo)) {
+            System.out.println("Petición desde la ruta de cliente");
+        }
+
+        String loginJWT = "";
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            loginJWT = authorizationHeader.substring(7);
+        }
+        Claims claims = Jwts.parser()
+                .verifyWith(TokenJwtConfig.SECRET_KEY)
+                .build()
+                .parseSignedClaims(loginJWT)
+                .getPayload();
+        Integer clienteID = claims.get("id", Integer.class);
+
+        List<PedidoDTO> listado = pedidoEjbService.listarPorClienteAndEstado( clienteID, EstadoPedido.PENDIENTE_PAGO);
 
         return Response.ok().entity( listado ).build();
     }

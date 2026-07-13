@@ -155,7 +155,7 @@ public class PedidoEjbServiceImpl implements PedidoEjbService {
 
     @Override
     public PedidoDTO encontrarID(Integer id) {
-        return mapper.toDTO(repository.findById(id).orElse(null));
+        return mapper.toDTO(repository.findByIdWithRelations(id).orElse(null));
     }
 
     @Override

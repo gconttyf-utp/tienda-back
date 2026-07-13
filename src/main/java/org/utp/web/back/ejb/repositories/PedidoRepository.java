@@ -20,7 +20,12 @@ public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
     /**
      * Lista los pedidos por el ID del Cliente.
      */
-    @Query("SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId")
+    @Query("SELECT p FROM Pedido p " +
+            "LEFT JOIN FETCH p.cliente " +
+            "LEFT JOIN FETCH p.tienda " +
+            "LEFT JOIN FETCH p.tipoPago " +
+            "LEFT JOIN FETCH p.detalles " +
+            "WHERE p.cliente.id = :clienteId")
     List<Pedido> findByClienteId(@Param("clienteId") Integer clienteId);
 
     /**
@@ -51,7 +56,12 @@ public interface PedidoRepository extends CrudRepository<Pedido, Integer> {
            "LEFT JOIN FETCH p.tienda")
     List<Pedido> findAllWithDetalles();
 
-    @Query("SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId AND p.estado = :estado")
+    @Query("SELECT p FROM Pedido p " +
+            "LEFT JOIN FETCH p.cliente " +
+            "LEFT JOIN FETCH p.tienda " +
+            "LEFT JOIN FETCH p.tipoPago " +
+            "LEFT JOIN FETCH p.detalles " +
+            "WHERE p.cliente.id = :clienteId AND p.estado = :estado")
     List<Pedido> findByClienteAndEstado(@Param("clienteId") Integer clienteId, @Param("estado") EstadoPedido estado);
     
     @Query("UPDATE Pedido p SET p.estado = :nuevoEstado, p.fechaDespacho = :fechaDespacho WHERE p.id = :pedidoId")
